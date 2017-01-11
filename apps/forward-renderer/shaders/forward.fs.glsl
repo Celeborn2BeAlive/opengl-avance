@@ -1,11 +1,11 @@
 #version 330
 
 in vec3 vNormal_vs;
+in vec2 vTexCoords;
 
-out vec3 fNormal;
+out vec3 fColor;
 
 void main()
 {
-	std::cout << vNormal_vs << std::endl;
-   //fNormal = vNormal_vs;
+   fColor = vec3(vTexCoords, 0);
 }

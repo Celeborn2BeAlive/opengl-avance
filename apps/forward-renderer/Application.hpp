@@ -25,5 +25,17 @@ private:
     GLuint m_cubeIBO = 0;
     GLuint m_cubeVAO = 0;
 
+    GLuint m_sphereVBO = 0;
+    GLuint m_sphereIBO = 0;
+    GLuint m_sphereVAO = 0;
+
+    uint32_t m_sizeCubeIBO;
+
+    uint32_t m_sizeSphereIBO;
+
+	GLint uniform_mv;
+	GLint uniform_normal;
+    GLint uniform_mvp;
+
     glmlv::GLProgram m_program;
 };
