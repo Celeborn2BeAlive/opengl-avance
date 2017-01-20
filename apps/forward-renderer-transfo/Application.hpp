@@ -22,9 +22,9 @@ private:
     const std::string m_ImGuiIniFilename;
     const glmlv::fs::path m_ShadersRootPath;
     
-    GLuint m_frVBO = 0;
-    GLuint m_frIBO = 0;
-    GLuint m_frVAO = 0;
+    GLuint m_frVBO[2] = {0};
+    GLuint m_frIBO[2] = {0};
+    GLuint m_frVAO[2] = {0};
     
     GLuint ulocMVPMat = 0;
 	GLuint ulocMVMat = 0;

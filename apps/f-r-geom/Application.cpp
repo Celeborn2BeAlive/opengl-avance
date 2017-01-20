@@ -29,6 +29,10 @@ int Application::run()
 
         // Put here rendering code
         glBindVertexArray(m_frVAO);
+        
+        GLint nb_sommets = 0;
+		glBindBuffer(GL_ARRAY_BUFFER, m_frIBO);
+		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &nb_sommets);
 		
         glDrawElements(GL_TRIANGLES, nb_sommets, GL_UNSIGNED_INT, nullptr);
 
