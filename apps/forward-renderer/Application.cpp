@@ -68,7 +68,7 @@ int Application::run()
 
         glBindTexture(GL_TEXTURE_2D, tex1);
 
-        //glDrawElements(GL_TRIANGLES, m_sizeCubeIBO , GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, m_sizeCubeIBO , GL_UNSIGNED_INT, 0);
 
         glBindVertexArray(0);
 
@@ -103,51 +103,11 @@ int Application::run()
 
         glBindTexture(GL_TEXTURE_2D, tex2);
 
-       // glDrawElements(GL_TRIANGLES, m_sizeSphereIBO , GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, m_sizeSphereIBO , GL_UNSIGNED_INT, 0);
 
         glBindVertexArray(0);
 
         
-        // SCENE RENDERING 
-
-        projection = glm::perspective(70.f, float(viewportSize.x) / viewportSize.y, 0.01f * m_SceneSize, m_SceneSize); // near = 1% de la taille de la scene, far = 100%
-        
-        glBindVertexArray(m_SceneVAO);
-    
-        // model matrix
-        glm::mat4 modelScene = glm::mat4(1);
-
-        // mv matrix
-        MVMatrix = view * modelScene;
-
-        glUniformMatrix4fv(uniform_mv, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-
-        // normal matrix
-        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-        glUniformMatrix4fv(uniform_normal, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-
-        // mvp matrix
-        MVPMatrix = projection * view * modelScene;
-        glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
-
-        glUniform3f(uniform_Kd, 1, 0, 0);
-
-
-        // Textures 
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(uniform_KdSampler, 0); // Set the uniform to 0 because we use texture unit 0
-        glBindSampler(0, samplerObject); // Tell to OpenGL what sampler we want to use on this texture unit
-
-        glBindTexture(GL_TEXTURE_2D, tex2);
-        glBindVertexArray(m_SceneVAO);
-        auto indexOffset = 0;
-        for (const auto indexCount: data.indexCountPerShape)
-        {
-            glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
-            indexOffset += indexCount
-        }
-        glBindVertexArray(0);
-
 
         // GUI code:
         ImGui_ImplGlfwGL3_NewFrame();
@@ -310,87 +270,6 @@ Application::Application(int argc, char** argv):
     glBindVertexArray(m_sphereVAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_sphereVBO);
-
-    glEnableVertexAttribArray(positionAttrLocation);
-    glVertexAttribPointer(positionAttrLocation, 3, GL_FLOAT, GL_FALSE, sizeof(glmlv::Vertex3f3f2f), (const GLvoid*) offsetof(glmlv::Vertex3f3f2f, position));
-
-    glEnableVertexAttribArray(normalAttrLocation);
-    glVertexAttribPointer(normalAttrLocation, 3, GL_FLOAT, GL_FALSE, sizeof(glmlv::Vertex3f3f2f), (const GLvoid*) offsetof(glmlv::Vertex3f3f2f, normal));
-
-    glEnableVertexAttribArray(texAttrLocation);
-    glVertexAttribPointer(texAttrLocation, 2, GL_FLOAT, GL_FALSE, sizeof(glmlv::Vertex3f3f2f), (const GLvoid*) offsetof(glmlv::Vertex3f3f2f, texCoords));
-    
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_sphereIBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-
-
-    /******* SCENE *******/
-    glmlv::ObjData data;
-    loadObj(m_AssetsRootPath / m_AppName / "models" / "sponza.obj", data);
-    m_SceneSize = glm::length(data.bboxMax - data.bboxMin);
-    
-    // Textures SCENE
-    glActiveTexture(GL_TEXTURE0);
-
-    // Upload all textures to the GPU
-    std::vector<GLint> textureIds;
-    for (const auto & texture : data.textures)
-    {
-        GLuint texId = 0;
-        glGenTextures(1, &texId);
-        glBindTexture(GL_TEXTURE_2D, texId);
-        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB32F, texture.width(), texture.height());
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, texture.width(), texture.height(), GL_RGBA, GL_UNSIGNED_BYTE, texture.data());
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        textureIds.emplace_back(texId);
-    }
-
-    /*glGenSamplers(1, &samplerObject);
-    glSamplerParameteri(samplerObject, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glSamplerParameteri(samplerObject, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    uniform_KdSampler = glGetUniformLocation(m_program.glId(), "uKdSampler");*/
-
-
-
- 
- 
-
-    const auto sceneDiagonalSize = glm::length(data.bboxMax - data.bboxMin);
-    camera.setSpeed(sceneDiagonalSize * 0.1f); // 10% de la scene parcouru par seconde
-    const auto projMatrix = glm::perspective(70.f, float(viewportSize.x) / viewportSize.y, 0.01f * m_SceneSize, m_SceneSize); // near = 1% de la taille de la scene, far = 100%
-
-    // VBO
-    glGenBuffers(1, &m_SceneVBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_SceneVBO);
-
-    glBufferStorage(GL_ARRAY_BUFFER, data.vertexBuffer.size() * sizeof(glmlv::Vertex3f3f2f),  data.vertexBuffer.data(), 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // IBO
-    glGenBuffers(1, &m_SceneIBO);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_SceneIBO);
-
-    glBufferStorage(GL_ELEMENT_ARRAY_BUFFER, data.indexBuffer.size() * sizeof(uint32_t), data.indexBuffer.data(), 0);
-
-    m_sizeSphereIBO = data.indexBuffer.size();
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    //VAO 
-    glGenVertexArrays(1, &m_SceneVAO);
-    
-    glBindVertexArray(m_SceneVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_SceneVBO);
 
     glEnableVertexAttribArray(positionAttrLocation);
     glVertexAttribPointer(positionAttrLocation, 3, GL_FLOAT, GL_FALSE, sizeof(glmlv::Vertex3f3f2f), (const GLvoid*) offsetof(glmlv::Vertex3f3f2f, position));

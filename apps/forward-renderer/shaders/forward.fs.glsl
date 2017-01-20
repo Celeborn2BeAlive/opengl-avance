@@ -19,9 +19,9 @@ out vec3 fColor;
 
 void main()
 {
-   	//float distToPointLight = length(uPointLightPosition - vPosition_vs);
-	//vec3 dirToPointLight = (uPointLightPosition - vPosition_vs) / distToPointLight;
-	//fColor = texture2D(uKdSampler, vTexCoords).bgr * uKd * (uDirectionalLightIntensity * max(0.0, dot(vNormal_vs, uDirectionalLightDir)) + uPointLightIntensity * max(0.0, dot(vNormal_vs, dirToPointLight)) / (distToPointLight * distToPointLight));
-	fColor = vNormal_vs;
+   	float distToPointLight = length(uPointLightPosition - vPosition_vs);
+	vec3 dirToPointLight = (uPointLightPosition - vPosition_vs) / distToPointLight;
+	fColor = texture2D(uKdSampler, vTexCoords).bgr * uKd * (uDirectionalLightIntensity * max(0.0, dot(vNormal_vs, uDirectionalLightDir)) + uPointLightIntensity * max(0.0, dot(vNormal_vs, dirToPointLight)) / (distToPointLight * distToPointLight));
+
 
 }
