@@ -16,6 +16,8 @@ public:
     Application(int argc, char** argv);
 
     int run();
+
+
 private:
     static glm::vec3 computeDirectionVector(float phiRadians, float thetaRadians)
     {
@@ -34,6 +36,11 @@ private:
     const std::string m_ImGuiIniFilename;
     const glmlv::fs::path m_ShadersRootPath;
     const glmlv::fs::path m_AssetsRootPath;
+
+    // Quad
+    GLuint m_quadVBO = 0;
+    GLuint m_quadIBO = 0;
+    GLuint m_quadVAO = 0;
 
     // Scene data in GPU:
     GLuint m_SceneVBO = 0;
@@ -72,6 +79,7 @@ private:
     GLuint m_textureSampler = 0; // Only one sampler object since we will use the same sampling parameters for all textures
 
     glmlv::GLProgram m_program;
+    glmlv::GLProgram m_programShadingPass;
 
     glmlv::ViewController m_viewController{ m_GLFWHandle.window(), 3.f };
     GLint m_uModelViewProjMatrixLocation;
@@ -93,6 +101,12 @@ private:
     GLint m_uKsSamplerLocation;
     GLint m_uShininessSamplerLocation;
 
+    GLint m_uGPosition;
+    GLint m_uGNormal;
+    GLint m_uGAmbient;
+    GLint m_uGDiffuse;
+    GLint m_uGlossyShininess;
+
     float m_DirLightPhiAngleDegrees = 90.f;
     float m_DirLightThetaAngleDegrees = 45.f;
     glm::vec3 m_DirLightDirection = computeDirectionVector(glm::radians(m_DirLightPhiAngleDegrees), glm::radians(m_DirLightThetaAngleDegrees));
@@ -102,4 +116,21 @@ private:
     glm::vec3 m_PointLightPosition = glm::vec3(0, 1, 0);
     glm::vec3 m_PointLightColor = glm::vec3(1, 1, 1);
     float m_PointLightIntensity = 5.f;
+
+    enum GBufferTextureType
+    {
+        GPosition = 0,
+        GNormal,
+        GAmbient,
+        GDiffuse,
+        GGlossyShininess,
+        GDepth, // On doit créer une texture de depth mais on écrit pas directement dedans dans le FS. OpenGL le fait pour nous (et l'utilise).
+        GBufferTextureCount
+    };
+
+
+    GLuint m_GBufferTextures[GBufferTextureCount];
+    const GLenum m_GBufferTextureFormat[GBufferTextureCount] = { GL_RGB32F, GL_RGB32F, GL_RGB32F, GL_RGB32F, GL_RGBA32F, GL_DEPTH_COMPONENT32F };
+    GLuint m_FBO;
+
 };

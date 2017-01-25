@@ -12,6 +12,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/io.hpp>
 
+
 int Application::run()
 {
     float clearColor[3] = { 0, 0, 0 };
@@ -22,18 +23,17 @@ int Application::run()
 
         // Put here rendering code
         const auto viewportSize = m_GLFWHandle.framebufferSize();
-        glViewport(0, 0, viewportSize.x, viewportSize.y);
+
+        // Geometry pass:
+        m_program.use();
+
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_FBO);
+        glViewport(0, 0, m_nWindowWidth, m_nWindowHeight);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         const auto projMatrix = glm::perspective(70.f, float(viewportSize.x) / viewportSize.y, 0.01f * m_SceneSize, m_SceneSize);
         const auto viewMatrix = m_viewController.getViewMatrix();
-
-        glUniform3fv(m_uDirectionalLightDirLocation, 1, glm::value_ptr(glm::vec3(viewMatrix * glm::vec4(glm::normalize(m_DirLightDirection), 0))));
-        glUniform3fv(m_uDirectionalLightIntensityLocation, 1, glm::value_ptr(m_DirLightColor * m_DirLightIntensity));
-
-        glUniform3fv(m_uPointLightPositionLocation, 1, glm::value_ptr(glm::vec3(viewMatrix * glm::vec4(m_PointLightPosition, 1))));
-        glUniform3fv(m_uPointLightIntensityLocation, 1, glm::value_ptr(m_PointLightColor * m_PointLightIntensity));
 
         const auto modelMatrix = glm::mat4();
 
@@ -89,6 +89,34 @@ int Application::run()
             }
             glDrawElements(GL_TRIANGLES, shape.indexCount, GL_UNSIGNED_INT, (const GLvoid*) (shape.indexOffset * sizeof(GLuint)));
         }
+
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+        // End of geometry pass
+
+
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBO);
+        glReadBuffer(GL_COLOR_ATTACHMENT0 + GBufferTextureType::GNormal);
+       
+        m_programShadingPass.use();
+
+        glUniform3fv(m_uDirectionalLightDirLocation, 1, glm::value_ptr(glm::vec3(viewMatrix * glm::vec4(glm::normalize(m_DirLightDirection), 0))));
+        glUniform3fv(m_uDirectionalLightIntensityLocation, 1, glm::value_ptr(m_DirLightColor * m_DirLightIntensity));
+
+        glUniform3fv(m_uPointLightPositionLocation, 1, glm::value_ptr(glm::vec3(viewMatrix * glm::vec4(m_PointLightPosition, 1))));
+        glUniform3fv(m_uPointLightIntensityLocation, 1, glm::value_ptr(m_PointLightColor * m_PointLightIntensity));
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, material.KaTextureId);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, material.KdTextureId);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, material.KsTextureId);
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, material.shininessTextureId);
+
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+
 
         for (GLuint i : {0, 1, 2, 3})
             glBindSampler(0, m_textureSampler);
@@ -149,6 +177,17 @@ int Application::run()
     return 0;
 }
 
+
+struct Vertex
+{
+    glm::vec2 position;
+    glm::vec3 color;
+
+    Vertex(glm::vec2 position, glm::vec3 color):
+        position(position), color(color)
+    {}
+};
+
 Application::Application(int argc, char** argv):
     m_AppPath { glmlv::fs::path{ argv[0] } },
     m_AppName { m_AppPath.stem().string() },
@@ -163,6 +202,7 @@ Application::Application(int argc, char** argv):
     glGenBuffers(1, &m_SceneIBO);
 
     {
+       
         const auto objPath = m_AssetsRootPath / "glmlv" / "models" / "crytek-sponza" / "sponza.obj";
         glmlv::ObjData data;
         loadObj(objPath, data);
@@ -239,7 +279,32 @@ Application::Application(int argc, char** argv):
         m_DefaultMaterial.KdTextureId = m_WhiteTexture;
         m_DefaultMaterial.KsTextureId = m_WhiteTexture;
         m_DefaultMaterial.shininessTextureId = m_WhiteTexture;
+
     }
+
+    // Create textures objects
+    glGenTextures(GBufferTextureCount, m_GBufferTextures);
+    for (int i = 0 ; i < GBufferTextureCount; i++) {
+        glBindTexture(GL_TEXTURE_2D, m_GBufferTextures[i]);
+        glTexStorage2D(GL_TEXTURE_2D, 1, m_GBufferTextureFormat[i], m_nWindowWidth, m_nWindowHeight);
+    }
+
+    // FBO
+    glGenFramebuffers(1, &m_FBO);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_FBO);
+    for (int i = 0 ; i < GBufferTextureType::GDepth; i++) {
+        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_GBufferTextures[i], 0);
+    }
+    glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_GBufferTextures[GBufferTextureType::GDepth], 0);
+
+    GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
+    glDrawBuffers(5, drawBuffers);
+    GLint status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+    if(status != GL_FRAMEBUFFER_COMPLETE) {
+        std::cout << "ERROR FRAME BUFFER" << std::endl;
+    }
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
 
     // Fill VAO
     glGenVertexArrays(1, &m_SceneVAO);
@@ -295,6 +360,70 @@ Application::Application(int argc, char** argv):
     m_uKdSamplerLocation = glGetUniformLocation(m_program.glId(), "uKdSampler");
     m_uKsSamplerLocation = glGetUniformLocation(m_program.glId(), "uKsSampler");
     m_uShininessSamplerLocation = glGetUniformLocation(m_program.glId(), "uShininessSampler");
+
+
+    glGenBuffers(1, &m_quadVBO);
+
+    Vertex quadVertices[] = {
+        Vertex { glm::vec2(-1, -1), glm::vec3(1, 0, 0) },
+        Vertex { glm::vec2(1, -1), glm::vec3(0, 1, 0) },
+        Vertex { glm::vec2(1, 1), glm::vec3(0, 0, 1) },
+        Vertex { glm::vec2(-1, 1), glm::vec3(1, 1, 1) }
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+
+    glBufferStorage(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glGenBuffers(1, &m_quadIBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_quadIBO);
+
+    GLuint quadIndices[] = {
+        0, 1, 2, // First triangle
+        0, 2, 3 // Second triangle
+    };
+
+    glBufferStorage(GL_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glGenVertexArrays(1, &m_quadVAO);
+
+    m_programShadingPass = glmlv::compileProgram({ m_ShadersRootPath / m_AppName / "shadingPass.vs.glsl", m_ShadersRootPath / m_AppName / "shadingPass.fs.glsl" });
+    
+    // Here we use glGetAttribLocation(program, attribname) to obtain attrib locations; We could also directly use locations if they are set in the vertex shader (cf. triangle app)
+    const GLint positionAttrLocation = glGetAttribLocation(m_program.glId(), "aPosition");
+   
+    glBindVertexArray(m_quadVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+
+    glEnableVertexAttribArray(positionAttrLocation);
+    glVertexAttribPointer(positionAttrLocation, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, position));
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_quadIBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindVertexArray(0);
+
+
+    m_programShadingPass.use();
+
+    m_uDirectionalLightDirLocation = glGetUniformLocation(m_programShadingPass.glId(), "uDirectionalLightDir");
+    m_uDirectionalLightIntensityLocation = glGetUniformLocation(m_programShadingPass.glId(), "uDirectionalLightIntensity");
+
+    m_uPointLightPositionLocation = glGetUniformLocation(m_programShadingPass.glId(), "uPointLightPosition");
+    m_uPointLightIntensityLocation = glGetUniformLocation(m_programShadingPass.glId(), "uPointLightIntensity");
+
+    m_uGPosition = glGetUniformLocation(m_programShadingPass.glId(), "uGPosition");
+    m_uGNormal = glGetUniformLocation(m_programShadingPass.glId(), "uGNormal");
+    m_uGAmbient = glGetUniformLocation(m_programShadingPass.glId(), "uGAmbient");
+    m_uGDiffuse = glGetUniformLocation(m_programShadingPass.glId(), "uGDiffuse");
+    m_uGlossyShininess = glGetUniformLocation(m_programShadingPass.glId(), "uGlossyShininess");
 
     m_viewController.setSpeed(m_SceneSize * 0.1f); // Let's travel 10% of the scene per second
 }
