@@ -16,6 +16,8 @@
 int Application::run()
 {
     float clearColor[3] = { 0, 0, 0 };
+    float gamma = 2.2;
+
     // Loop until the user closes the window
     for (auto iterationCount = 0u; !m_GLFWHandle.shouldClose(); ++iterationCount)
     {
@@ -124,13 +126,24 @@ int Application::run()
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
         }
 
+        // Gamma correction pass
+        {
+            m_gammaCorrectionProgram.use();
+
+            glUniform1f(m_uGammaExponent, 1.f / gamma);
+            glBindImageTexture(0, m_BeautyTexture, 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+            glBindImageTexture(1, m_GammaCorrectedBeautyTexture, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+
+            glDispatchCompute(m_nWindowWidth, m_nWindowHeight, 1);
+        }
+
         const auto viewportSize = m_GLFWHandle.framebufferSize();
         glViewport(0, 0, viewportSize.x, viewportSize.y);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         if (m_CurrentlyDisplayed == GBufferTextureCount) // Beauty
         {
-            glBindFramebuffer(GL_READ_FRAMEBUFFER, m_BeautyFBO);
+            glBindFramebuffer(GL_READ_FRAMEBUFFER, m_GammaCorrectedBeautyFBO);
             glReadBuffer(GL_COLOR_ATTACHMENT0);
             glBlitFramebuffer(0, 0, m_nWindowWidth, m_nWindowHeight,
                 0, 0, m_nWindowWidth, m_nWindowHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -192,6 +205,8 @@ int Application::run()
             if (ImGui::ColorEdit3("clearColor", clearColor)) {
                 glClearColor(clearColor[0], clearColor[1], clearColor[2], 1.f);
             }
+            ImGui::InputFloat("gamma", &gamma);
+
             if (ImGui::Button("Sort shapes wrt materialID"))
             {
                 std::sort(begin(m_shapes), end(m_shapes), [&](auto lhs, auto rhs)
@@ -295,17 +310,23 @@ Application::Application(int argc, char** argv):
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-    // Init beauty texture and FBO
-    glGenTextures(1, &m_BeautyTexture);
+    // Init beauty texture and FBO, factorizing code in a lambda
+    const auto initTexAndFBO = [this](GLuint & texObj, GLuint & fboObj) 
+    {
+        glGenTextures(1, &texObj);
 
-    glBindTexture(GL_TEXTURE_2D, m_BeautyTexture);
-    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA32F, m_nWindowWidth, m_nWindowHeight);
+        glBindTexture(GL_TEXTURE_2D, texObj);
+        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA32F, m_nWindowWidth, m_nWindowHeight);
 
-    glGenFramebuffers(1, &m_BeautyFBO);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_BeautyFBO);
-    glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_BeautyTexture, 0);
+        glGenFramebuffers(1, &fboObj);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fboObj);
+        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texObj, 0);
 
-    glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0);
+    };
+
+    initTexAndFBO(m_BeautyTexture, m_BeautyFBO);
+    initTexAndFBO(m_GammaCorrectedBeautyTexture, m_GammaCorrectedBeautyFBO);
 
     {
         GLenum status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
@@ -488,4 +509,7 @@ void Application::initShadersData()
 
     m_uGPositionSamplerLocation = glGetUniformLocation(m_displayPositionProgram.glId(), "uGPosition");
     m_uSceneSizeLocation = glGetUniformLocation(m_displayPositionProgram.glId(), "uSceneSize");
+
+    m_gammaCorrectionProgram = glmlv::compileProgram({ m_ShadersRootPath / m_AppName / "gammaCorrect.cs.glsl" });
+    m_uGammaExponent = glGetUniformLocation(m_gammaCorrectionProgram.glId(), "uGammaExponent");
 }
