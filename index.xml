@@ -25,15 +25,6 @@ Khronos est le groupe chargé d&amp;rsquo;établir la spécification de chaque v
     
     <item>
       <title>Introduction</title>
-      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</link>
-      <pubDate>Thu, 29 Dec 2016 12:35:23 +0100</pubDate>
-      
-      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</guid>
-      <description>En construction  </description>
-    </item>
-    
-    <item>
-      <title>Introduction</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</link>
       <pubDate>Thu, 29 Dec 2016 11:34:23 +0100</pubDate>
       
@@ -50,6 +41,16 @@ En plus de cela, et si votre carte graphique le permet, il vous sera possible de
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction/</guid>
       <description>Nous avons jusqu&amp;rsquo;a présent calculé l&amp;rsquo;éclairage des lumières sans prise en compte des ombres portées par les objets: la lumière passe à travers&amp;hellip;
 Pour savoir si un fragment est dans la lumière ou dans l&amp;rsquo;ombre par rapport à une light donnée, il faut savoir si un objet intersecte le rayon connectant le fragment à la lumière. Il y a plusieurs moyens de calculer cette information. Deux méthodes sont principalement utilisées en rendu temps réel: le shadow mapping et les shadow volumes.</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</guid>
+      <description>L&amp;rsquo;objectif de ce dernier tutoriel est d&amp;rsquo;apprendre à appliquer des traitements à l&amp;rsquo;image après que celle ci ait été rendue. On appelle ça le post-processing.
+Il y a plusieurs manière de faire du post-processing en OpenGL. La plus classique est d&amp;rsquo;utiliser un fragment shader qui prend en entrée une texture contenant l&amp;rsquo;image à traiter. Cela ressemble beaucoup à la shading pass du deferred rendering (la shading pass peut être vu comme un post-process du GBuffer).</description>
     </item>
     
     <item>
@@ -96,15 +97,6 @@ Et ce schéma entre dans le détail de chaque étape (un joli poster à accroche
     </item>
     
     <item>
-      <title>Gamma correction</title>
-      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:04 +0100</pubDate>
-      
-      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</guid>
-      <description>En construction  </description>
-    </item>
-    
-    <item>
       <title>Directional Shadow Map</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/dir-shadow-map/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -113,6 +105,16 @@ Et ce schéma entre dans le détail de chaque étape (un joli poster à accroche
       <description>Nous allons commencer par l&amp;rsquo;utilisation du shadow mapping pour une lumière directionnelle, qui est plus simple.
 Il y a globalement quatre partie à coder:
  Initialisation: Allocation des données OpenGL nécessaire à l&amp;rsquo;algorithme Shaders: Coder les shaders nécessaire à la création de la shadow map. Création de la shadow map: A faire au rendu des que la direction de la lumière est modifiée. Il s&amp;rsquo;agit de calculer la depth map selon le point de vue de la light.</description>
+    </item>
+    
+    <item>
+      <title>Gamma correction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</guid>
+      <description>Un premiere filtre simple que nous allons appliquer à l&amp;rsquo;image est la gamma correction. Ce filtre corrige les couleurs d&amp;rsquo;une image pour tenir compte du rendu non linéaire des couleurs qu&amp;rsquo;un moniteur affiche. Pour plus de détails consultez l&amp;rsquo;article wikipedia ou cet article.
+Gamma correction Le principe de la correction gamma est d&amp;rsquo;élever la valeur de tous les pixels (les 3 composantes R, G et B) à la puissance (1 / G) où G est la valeur de gamma.</description>
     </item>
     
     <item>
@@ -164,7 +166,7 @@ Il existe différents types d&amp;rsquo;objets OpenGL, ceux que nous utilisons d
     <item>
       <title>Extraction de contours</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:20 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</guid>
       <description>En construction  </description>
@@ -177,6 +179,16 @@ Il existe différents types d&amp;rsquo;objets OpenGL, ceux que nous utilisons d
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</guid>
       <description>Remplissez cette fiche: https://goo.gl/forms/ffuXJJ1vYCAvUA7s1 ça m&amp;rsquo;aidera.</description>
+    </item>
+    
+    <item>
+      <title>Percentage Closest Filtering</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</guid>
+      <description>Percentage Closest Filtering Basique L&amp;rsquo;aspect visuel du shadow mapping dépend grandement de la résolution choisie. Pour une résolution de 512, vous avez du constater que le rendu des ombres est très aliasé. Il faut monter à 4096 au moins pour ne plus voir l&amp;rsquo;aliasing à une distance correcte, qui reste très visible en se rapprochant.
+Une manière de palier à cet aliasing est d&amp;rsquo;utiliser une méthode de filtrage appelée Percentage Closest Filtering, qui consiste à moyenner la visibilité dans un voisinage du point afin de flouter/bruiter les ombres sur leur bord.</description>
     </item>
     
     <item>
@@ -214,18 +226,20 @@ Le VS est destiner à traiter un simple quad en 2D couvrant tout l&amp;rsquo;éc
     </item>
     
     <item>
-      <title>Point Shadow Map</title>
-      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/</link>
-      <pubDate>Thu, 19 Jan 2017 23:22:33 +0100</pubDate>
+      <title>Aller plus loin</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/</guid>
-      <description>En construction  </description>
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</guid>
+      <description>Ces exercices vous ont montré comment implementer le shadow mapping pour une lumière directionnelle.
+L&amp;rsquo;implémentation est un peu plus compliquée pour une lumière ponctuelle car il faut pouvoir projeter sur la carte de profondeur l&amp;rsquo;ensemble de la scene vu depuis la point light, c&amp;rsquo;est à dire la considérer comme une camera pouvant voir à 360°.
+Le plus simple et robuste pour cela est de faire 6 rendus de la scene sur les faces d&amp;rsquo;un cube entourant la point light.</description>
     </item>
     
     <item>
       <title>Depth of field</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:32 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</guid>
       <description>En construction  </description>

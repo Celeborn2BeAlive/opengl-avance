@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Introduction - OpenGL Avancé</title>
+    <title>Aller plus loin - OpenGL Avancé</title>
 
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
@@ -203,24 +203,22 @@
         </div>
 
         <div class="col middle-content page-content">
-            <h1 class="section-title">Introduction</h1>
+            <h1 class="section-title">Aller plus loin</h1>
 
-            <p>Nous avons jusqu&rsquo;a présent calculé l&rsquo;éclairage des lumières sans prise en compte des ombres portées par les objets: la lumière passe à travers&hellip;</p>
+            <p>Ces exercices vous ont montré comment implementer le <strong>shadow mapping</strong> pour une <strong>lumière directionnelle</strong>.</p>
 
-<p>Pour savoir si un fragment est dans la lumière ou dans l&rsquo;ombre par rapport à une light donnée, il faut savoir si un objet intersecte le rayon connectant le fragment à la lumière. Il y a plusieurs moyens de calculer cette information. Deux méthodes sont principalement utilisées en rendu temps réel: le <a href="https://www.wikiwand.com/en/Shadow_mapping">shadow mapping</a> et les <a href="https://www.wikiwand.com/en/Shadow_volume">shadow volumes</a>.</p>
+<p>L&rsquo;implémentation est un peu plus compliquée pour une <strong>lumière ponctuelle</strong> car il faut pouvoir projeter sur la carte de profondeur l&rsquo;ensemble de la scene vu depuis la point light, c&rsquo;est à dire la considérer comme une camera pouvant voir à 360°.</p>
 
-<p>Nous allons nous intéresser au shadow mapping pour ces TPs. L&rsquo;idée est de faire un rendu de la scène selon le point de vue de la lumière afin de connaitre l&rsquo;ensemble des points visibles depuis cette lumière. Plus exactement, on calcule une carte de profondeur (depth map) vue par la lumière. Ensuite, pendant le rendu principal de la scène (depuis le point de vue de la caméra), on projete les points vus par la caméra sur la depth map précalculée pour la light. On obtient ainsi un pixel de la depth map, et si la depth enregistrée dans cette map est inférieure à la depth du fragment vu par la caméra, alors necessairement un objet vient occulter ce fragment, qui est donc dans l&rsquo;ombre.</p>
+<p>Le plus simple et robuste pour cela est de faire 6 rendus de la scene sur les faces d&rsquo;un cube entourant la point light. La branche cheat contient l&rsquo;application &ldquo;shadow-mapping-03-point-light-sm&rdquo; qui implémente cette méthode. Vous pouvez aller lire le code si vous êtes interessé, ou mieux essayer de l&rsquo;implémenter vous même.</p>
 
-<p>Le schéma suivant résume ce principe:</p>
+<p>Le shadow mapping est un algorithme simple à comprendre, mais assez peu robuste dans sa version initiale (artefacts tel que shadow acné, ou apparition des pixels de la shadow map). Pour autant, Il reste la méthode d&rsquo;ombrage la plus utilisée dans les jeux vidéo. Cela est rendu possible par les nombreuses améliorations dont il a bénéficié grâce à la recherche.</p>
 
-<p><img src="https://Celeborn2BeAlive.github.io/opengl-avance/images/shadow_mapping.jpg" alt="Shadow Mapping" /></p>
+<p>Pour finir, voici deux bons livres de référence sur les méthodes d&rsquo;ombrages:</p>
 
-<p>Cet algorithme peut être implémenté sur un forward renderer ou sur un deferred renderer. Pour ces TPs nous allons repartir du deferred renderer. Si vous ne l&rsquo;avez pas terminé, vous pouvez le récupérer sur la branche cheat du repository.</p>
-
-<div class="alert alert-info">
-<p>Afin de faire vos tests plus rapidement, j&rsquo;ai ajouté un argument à la fonction <em>glmlv::loadObj</em> qui permet d&rsquo;éviter le chargement des textures et donc de lancer plus rapidement l&rsquo;application (mettre l&rsquo;argument à <em>false</em> pour ne pas charger les textures). Il faudra peut être puller la dernière version du repo pour récupérer ce changement.</p>
-
-</div>
+<ul>
+<li><a href="https://www.amazon.com/gp/product/1439880239?tag=realtimerenderin&amp;pldnSite=1">Shadow Algorithms Data Miner</a></li>
+<li><a href="https://www.amazon.com/Real-Time-Shadows-Michael-Wimmer/dp/1568814380?tag=realtimerenderin&amp;pldnSite=1">Real-Time Shadows</a></li>
+</ul>
 
         </div>
 

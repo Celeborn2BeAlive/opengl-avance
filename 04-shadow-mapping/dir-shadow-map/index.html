@@ -192,7 +192,11 @@
         </li>
     
         <li class="nav-item">
-            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/">Point Shadow Map</a>
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/">Percentage Closest Filtering</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/">Aller plus loin</a>
         </li>
     
 </ul>
@@ -475,98 +479,6 @@ Ajoutez les uniform suivantes:</p>
 
 <p>Voir sur la branche cheat pour un exemple.</p>
 
-<h1 id="percentage-closest-filtering">Percentage Closest Filtering</h1>
-
-<h2 id="basique">Basique</h2>
-
-<p>L&rsquo;aspect visuel du shadow mapping dépend grandement de la résolution choisie. Pour une résolution de 512, vous avez du constater que le rendu des ombres est très aliasé. Il faut monter à 4096 au moins pour ne plus voir l&rsquo;aliasing à une distance correcte, qui reste très visible en se rapprochant.</p>
-
-<p>Une manière de palier à cet aliasing est d&rsquo;utiliser une méthode de filtrage appelée <em>Percentage Closest Filtering</em>, qui consiste à moyenner la visibilité dans un voisinage du point afin de flouter/bruiter les ombres sur leur bord.</p>
-
-<p>Cette technique est en partie supportée par le GPU en passant par un sampler de type <em>sampler2DShadow</em> en GLSL.</p>
-
-<p>Dans <em>shadingPass.fs.glsl</em>, remplacez la déclaration des uniformes du shadow mapping par:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="">mat4</span><span style=""> </span><span style="">uDirLightViewProjMatrix</span><span style="">;</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="color:#66d9ef">sampler2DShadow</span><span style=""> </span><span style="">uDirLightShadowMap</span><span style="">;</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">uDirLightShadowMapBias</span><span style="">;</span></code></pre>
-</div>
-<p>Puis remplacez le code de calcul de la visibilité par:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">positionInDirLightScreen</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">uDirLightViewProjMatrix</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style="">(</span><span style="">position</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">);</span><span style=""> </span><span style="color:#75715e">// Compute fragment position in NDC space of light</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">vec3</span><span style=""> </span><span style="">positionInDirLightNDC</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">vec3</span><span style="">(</span><span style="">positionInDirLightScreen</span><span style=""> </span><span style="color:#f92672">/</span><span style=""> </span><span style="">positionInDirLightScreen</span><span style="">.</span><span style="">w</span><span style="">)</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#ae81ff">0.5</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">0.5</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// Homogeneize + put between 0 and 1</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">dirLightVisibility</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">textureProj</span><span style="">(</span><span style="">uDirLightShadowMap</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style="">(</span><span style="">positionInDirLightNDC</span><span style="">.</span><span style="">xy</span><span style="">,</span><span style=""> </span><span style="">positionInDirLightNDC</span><span style="">.</span><span style="">z</span><span style=""> </span><span style="color:#f92672">-</span><span style=""> </span><span style="">uDirLightShadowMapBias</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">1.0</span><span style="">),</span><span style=""> </span><span style="color:#ae81ff">0.0</span><span style="">);</span></code></pre>
-</div>
-<p>On utilise donc un <em>sampler2DShadow</em> à la place d&rsquo;un <em>sampler2D</em> et la fonction <em>textureProj</em> à la place de <em>texture</em>. Ce code permet d&rsquo;obtenir un filtrage 2x2 (bilinéaire) sur nos ombres.</p>
-
-<p>Afin que ce shader fonctionne, il faut rajouter deux lignes à l&rsquo;initialisation du sampler m_directionalSMSampler:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">glGenSamplers</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">m_directionalSMSampler</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_MIN_FILTER</span><span style="">,</span><span style=""> </span><span style="">GL_LINEAR</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_MAG_FILTER</span><span style="">,</span><span style=""> </span><span style="">GL_LINEAR</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_WRAP_S</span><span style="">,</span><span style=""> </span><span style="">GL_CLAMP_TO_BORDER</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_WRAP_T</span><span style="">,</span><span style=""> </span><span style="">GL_CLAMP_TO_BORDER</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_COMPARE_MODE</span><span style="">,</span><span style=""> </span><span style="">GL_COMPARE_REF_TO_TEXTURE</span><span style="">);</span><span style=""> </span><span style="color:#75715e">// Cette ligne
-</span><span style="color:#75715e"></span><span style="">glSamplerParameteri</span><span style="">(</span><span style="">m_directionalSMSampler</span><span style="">,</span><span style=""> </span><span style="">GL_TEXTURE_COMPARE_FUNC</span><span style="">,</span><span style=""> </span><span style="">GL_LEQUAL</span><span style="">)</span><span style=""> </span><span style="color:#f92672">//</span><span style=""> </span><span style="">Et</span><span style=""> </span><span style="">celle</span><span style=""> </span><span style="">ci</span><span style="">;</span></code></pre>
-</div>
-<p>Ces lignes définissent le comportement de la fonction <em>textureProj</em> dans le shader.</p>
-
-<p>Une fois ces modifications effectuées, lancez votre application et constatez que les ombres sont un peu floutées.</p>
-
-<h2 id="arbitraire">Arbitraire</h2>
-
-<p>Il est possible d&rsquo;allouer plus loin dans le filtrage des ombres en appliquant un filtre arbitraire lors de la lecture de la shadow map. Cela est plus couteux mais également plus agréable visuellement.</p>
-
-<p>Dans <em>shadingPass.fs.glsl</em>, ajoutez les uniform:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="color:#66d9ef">int</span><span style=""> </span><span style="">uDirLightShadowMapSampleCount</span><span style="">;</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">uDirLightShadowMapSpread</span><span style="">;</span></code></pre>
-</div>
-<p>et le code utilitaires (avant le main):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">vec2</span><span style=""> </span><span style="">poissonDisk</span><span style="">[</span><span style="color:#ae81ff">16</span><span style="">]</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">vec2</span><span style="">[](</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.94201624</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.39906216</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.94558609</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.76890725</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.094184101</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.92938870</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.34495938</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.29387760</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.91588581</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.45771432</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.81544232</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.87912464</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.38277543</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.27676845</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.97484398</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.75648379</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.44323325</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.97511554</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.53742981</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.47373420</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.26496911</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.41893023</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.79197514</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.19090188</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.24188840</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.99706507</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.81409955</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.91437590</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.19984126</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0.78641367</span><span style=""> </span><span style="">),</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">vec2</span><span style="">(</span><span style=""> </span><span style="color:#ae81ff">0.14383161</span><span style="">,</span><span style=""> </span><span style="color:#f92672">-</span><span style="color:#ae81ff">0.14100790</span><span style=""> </span><span style="">)</span><span style="">
-</span><span style=""></span><span style="">);</span><span style="">
-</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">random</span><span style="">(</span><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">seed</span><span style="">)</span><span style="">
-</span><span style=""></span><span style="">{</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">dot_product</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">dot</span><span style="">(</span><span style="">seed</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style="">(</span><span style="color:#ae81ff">12.9898</span><span style="">,</span><span style="color:#ae81ff">78.233</span><span style="">,</span><span style="color:#ae81ff">45.164</span><span style="">,</span><span style="color:#ae81ff">94.673</span><span style="">));</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">fract</span><span style="">(</span><span style="">sin</span><span style="">(</span><span style="">dot_product</span><span style="">)</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#ae81ff">43758.5453</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">}</span></code></pre>
-</div>
-<p>Le tableau poissonDisk definit 16 échantillons d&rsquo;une distribution de poisson 2D centrée en (0,0). La fonction random permet d&rsquo;obtenir un nombre pseudo-aléatoire à partir d&rsquo;une graine.</p>
-
-<p>Dans le main du shader, remplacez le calcul de la visibilité par:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">float</span><span style=""> </span><span style="">dirLightVisibility</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0.0</span><span style="">;</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">float</span><span style=""> </span><span style="">dirSampleCountf</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">float</span><span style="">(</span><span style="">uDirLightShadowMapSampleCount</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">int</span><span style=""> </span><span style="">step</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">max</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">16</span><span style=""> </span><span style="color:#f92672">/</span><span style=""> </span><span style="">uDirLightShadowMapSampleCount</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">for</span><span style=""> </span><span style="">(</span><span style="color:#66d9ef">int</span><span style=""> </span><span style="">i</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style=""> </span><span style="">i</span><span style=""> </span><span style="color:#f92672">&lt;</span><span style=""> </span><span style="">uDirLightShadowMapSampleCount</span><span style="">;</span><span style=""> </span><span style="color:#f92672">++</span><span style="">i</span><span style="">)</span><span style="">
-</span><span style=""></span><span style="">{</span><span style="">
-</span><span style="">    </span><span style="color:#75715e">// Noisy shadows:</span><span style="">
-</span><span style="">    </span><span style="color:#66d9ef">int</span><span style=""> </span><span style="">index</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">int</span><span style="">(</span><span style="">dirSampleCountf</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="">random</span><span style="">(</span><span style="color:#66d9ef">vec4</span><span style="">(</span><span style="">gl_FragCoord</span><span style="">.</span><span style="">xyy</span><span style="">,</span><span style=""> </span><span style="">i</span><span style="">)))</span><span style=""> </span><span style="color:#f92672">%</span><span style=""> </span><span style="">uDirLightShadowMapSampleCount</span><span style="">;</span><span style="">
-</span><span style="">
-</span><span style="">    </span><span style="">dirLightVisibility</span><span style=""> </span><span style="color:#f92672">+=</span><span style=""> </span><span style="">textureProj</span><span style="">(</span><span style="">uDirLightShadowMap</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style="">(</span><span style="">positionInDirLightNDC</span><span style="">.</span><span style="">xy</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="">uDirLightShadowMapSpread</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="">poissonDisk</span><span style="">[</span><span style="">index</span><span style="">],</span><span style=""> </span><span style="">positionInDirLightNDC</span><span style="">.</span><span style="">z</span><span style=""> </span><span style="color:#f92672">-</span><span style=""> </span><span style="">uDirLightShadowMapBias</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">1.0</span><span style="">),</span><span style=""> </span><span style="color:#ae81ff">0.0</span><span style="">);</span><span style="">
-</span><span style=""></span><span style="">}</span><span style="">
-</span><span style=""></span><span style="">dirLightVisibility</span><span style=""> </span><span style="color:#f92672">/=</span><span style=""> </span><span style="">dirSampleCountf</span><span style="">;</span></code></pre>
-</div>
-<p>Dans le code de l&rsquo;application, faites en sorte de pouvoir setter les deux nouvelles uniforms uDirLightShadowMapSampleCount et uDirLightShadowMapSpread via la GUI. La variable uDirLightShadowMapSpread doit être relativement petite (de l&rsquo;ordre de 0.0005) afin de ne pas trop disperser les ombres.</p>
-
-<p>Essayez ce code. Il devrait vous donner des ombres bruitées mais douces.</p>
-
-<p>Une alternative pour obtenir des ombres floutées plutot que bruitées est de calculer l&rsquo;index dans la boucle avec:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#75715e">// Blurred shadows:</span><span style="">
-</span><span style=""></span><span style="color:#66d9ef">int</span><span style=""> </span><span style="">index</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">(</span><span style="">i</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="">step</span><span style="">)</span><span style=""> </span><span style="color:#f92672">%</span><span style=""> </span><span style="">uDirLightShadowMapSampleCount</span><span style="">;</span></code></pre>
-</div>
         </div>
 
         <div class="col side-menu side-menu-right page-content">
@@ -578,11 +490,6 @@ Ajoutez les uniform suivantes:</p>
 <li><a href="#création-de-la-shadow-map">Création de la shadow map</a></li>
 <li><a href="#utilisation-de-la-shadow-map">Utilisation de la shadow map</a></li>
 <li><a href="#si-ça-ne-fonctionne-pas">Si ça ne fonctionne pas</a></li>
-<li><a href="#percentage-closest-filtering">Percentage Closest Filtering</a>
-<ul>
-<li><a href="#basique">Basique</a></li>
-<li><a href="#arbitraire">Arbitraire</a></li>
-</ul></li>
 </ul>
 </nav>
 </div>

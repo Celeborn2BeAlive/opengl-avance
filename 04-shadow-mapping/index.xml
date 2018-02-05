@@ -7,7 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <copyright>Copyright (c) 2017, Laurent NOEL; All rights reserved.</copyright>
-    <lastBuildDate>Thu, 19 Jan 2017 23:22:33 +0100</lastBuildDate>
     
 	<atom:link href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/index.xml" rel="self" type="application/rss+xml" />
     
@@ -34,12 +33,24 @@ Il y a globalement quatre partie à coder:
     </item>
     
     <item>
-      <title>Point Shadow Map</title>
-      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/</link>
-      <pubDate>Thu, 19 Jan 2017 23:22:33 +0100</pubDate>
+      <title>Percentage Closest Filtering</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/</guid>
-      <description>En construction  </description>
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</guid>
+      <description>Percentage Closest Filtering Basique L&amp;rsquo;aspect visuel du shadow mapping dépend grandement de la résolution choisie. Pour une résolution de 512, vous avez du constater que le rendu des ombres est très aliasé. Il faut monter à 4096 au moins pour ne plus voir l&amp;rsquo;aliasing à une distance correcte, qui reste très visible en se rapprochant.
+Une manière de palier à cet aliasing est d&amp;rsquo;utiliser une méthode de filtrage appelée Percentage Closest Filtering, qui consiste à moyenner la visibilité dans un voisinage du point afin de flouter/bruiter les ombres sur leur bord.</description>
+    </item>
+    
+    <item>
+      <title>Aller plus loin</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</guid>
+      <description>Ces exercices vous ont montré comment implementer le shadow mapping pour une lumière directionnelle.
+L&amp;rsquo;implémentation est un peu plus compliquée pour une lumière ponctuelle car il faut pouvoir projeter sur la carte de profondeur l&amp;rsquo;ensemble de la scene vu depuis la point light, c&amp;rsquo;est à dire la considérer comme une camera pouvant voir à 360°.
+Le plus simple et robuste pour cela est de faire 6 rendus de la scene sur les faces d&amp;rsquo;un cube entourant la point light.</description>
     </item>
     
   </channel>

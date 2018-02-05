@@ -205,17 +205,38 @@
         <div class="col middle-content page-content">
             <h1 class="section-title">Introduction</h1>
 
-            <div class="alert alert-info">
+            
 
-En construction
+<p>L&rsquo;objectif de ce dernier tutoriel est d&rsquo;apprendre à appliquer des traitements à l&rsquo;image après que celle ci ait été rendue. On appelle ça le post-processing.</p>
 
-</div>
+<p>Il y a plusieurs manière de faire du post-processing en OpenGL. La plus classique est d&rsquo;utiliser un fragment shader qui prend en entrée une texture contenant l&rsquo;image à traiter. Cela ressemble beaucoup à la shading pass du deferred rendering (la shading pass peut être vu comme un post-process du GBuffer).</p>
+
+<p>Une manière plus efficace et plus moderne de faire du post-processing est d&rsquo;utiliser un <strong>compute shader</strong>. Un <strong>compute shader</strong> permet de faire du GPGPU en OpenGL, c&rsquo;est à dire du calcul parallele plus général que la rasterization. Un compute shader est très semblable à un kernel Cuda.</p>
+
+<p>L&rsquo;utilisation d&rsquo;un compute shader permet d&rsquo;éviter d&rsquo;avoir a dessiner un quad pour lancer le traitement (car un compute shader est lancé sans géométrie d&rsquo;entrée).</p>
+
+<h1 id="adaptation-du-code-du-deferred-rendering">Adaptation du code du deferred rendering</h1>
+
+<p>Nous allons repartir du deferred rendering afin de garder un code simple. Mais il va falloir l&rsquo;adapter un peu: le dessin final ne doit plus être fait directement à l&rsquo;écran, mais dans une texture. C&rsquo;est très similaire au rendu du GBuffer: il faut utiliser un FBO.</p>
+
+<ul>
+<li>Dans la classe Application, ajoutez deux variable membres <strong>GLuint m_BeautyTexture</strong> et <strong>GLuint m_BeautyFBO</strong>.</li>
+<li>Dans le constructeur, initialisez cette texture et ce FBO. La texture doit avoir la taille de l&rsquo;écran et être attachée au FBO. Son format interne doit être GL_RGBA32F. Le FBO doit avoir un seul draw buffer d&rsquo;activé: GL_COLOR_ATTACHMENT0. Le code doit être similaire à l&rsquo;initialisation du GBuffer.</li>
+<li>Au rendu, faite en sorte que la shading pass se dessine dans la texture. Il faut pour cela binder le FBO sur la cible <strong>GL_DRAW_FRAMEBUFFER</strong>.</li>
+<li>Utilisez glReadBuffer et glBlitFramebuffer pour afficher la texture de beauty à l&rsquo;écran.</li>
+</ul>
+
+<p>A ce stade vous devriez avoir un résultat identique au deferred classique.</p>
 
         </div>
 
         <div class="col side-menu side-menu-right page-content">
             <div class="toc-sidebar">
-
+<nav id="TableOfContents">
+<ul>
+<li><a href="#adaptation-du-code-du-deferred-rendering">Adaptation du code du deferred rendering</a></li>
+</ul>
+</nav>
 </div>
         </div>
     </div>

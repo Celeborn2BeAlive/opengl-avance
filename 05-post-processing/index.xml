@@ -7,7 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <copyright>Copyright (c) 2017, Laurent NOEL; All rights reserved.</copyright>
-    <lastBuildDate>Thu, 29 Dec 2016 12:35:23 +0100</lastBuildDate>
     
 	<atom:link href="https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,25 +14,27 @@
     <item>
       <title>Introduction</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</link>
-      <pubDate>Thu, 29 Dec 2016 12:35:23 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</guid>
-      <description>En construction  </description>
+      <description>L&amp;rsquo;objectif de ce dernier tutoriel est d&amp;rsquo;apprendre à appliquer des traitements à l&amp;rsquo;image après que celle ci ait été rendue. On appelle ça le post-processing.
+Il y a plusieurs manière de faire du post-processing en OpenGL. La plus classique est d&amp;rsquo;utiliser un fragment shader qui prend en entrée une texture contenant l&amp;rsquo;image à traiter. Cela ressemble beaucoup à la shading pass du deferred rendering (la shading pass peut être vu comme un post-process du GBuffer).</description>
     </item>
     
     <item>
       <title>Gamma correction</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:04 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</guid>
-      <description>En construction  </description>
+      <description>Un premiere filtre simple que nous allons appliquer à l&amp;rsquo;image est la gamma correction. Ce filtre corrige les couleurs d&amp;rsquo;une image pour tenir compte du rendu non linéaire des couleurs qu&amp;rsquo;un moniteur affiche. Pour plus de détails consultez l&amp;rsquo;article wikipedia ou cet article.
+Gamma correction Le principe de la correction gamma est d&amp;rsquo;élever la valeur de tous les pixels (les 3 composantes R, G et B) à la puissance (1 / G) où G est la valeur de gamma.</description>
     </item>
     
     <item>
       <title>Extraction de contours</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:20 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</guid>
       <description>En construction  </description>
@@ -42,7 +43,7 @@
     <item>
       <title>Depth of field</title>
       <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</link>
-      <pubDate>Thu, 29 Dec 2016 12:36:32 +0100</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</guid>
       <description>En construction  </description>

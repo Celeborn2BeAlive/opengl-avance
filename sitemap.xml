@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</loc>
-    <lastmod>2016-12-29T12:35:23+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</loc>
     <lastmod>2016-12-29T11:34:23+01:00</lastmod>
   </url>
@@ -24,6 +19,10 @@
   
   <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</loc>
   </url>
   
   <url>
@@ -45,17 +44,16 @@
   </url>
   
   <url>
-    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</loc>
-    <lastmod>2016-12-29T12:36:04+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/dir-shadow-map/</loc>
   </url>
   
   <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/</loc>
     <lastmod>2016-12-29T12:22:16+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</loc>
   </url>
   
   <url>
@@ -76,16 +74,19 @@
   </url>
   
   <url>
-    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</loc>
-    <lastmod>2016-12-29T12:36:20+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/</loc>
   </url>
   
   <url>
+    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</loc>
+  </url>
+  
+  <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</loc>
+  </url>
+  
+  <url>
+    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</loc>
   </url>
   
   <url>
@@ -102,18 +103,15 @@
   </url>
   
   <url>
-    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/point-shadow-map/</loc>
-    <lastmod>2017-01-19T23:22:33+01:00</lastmod>
+    <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</loc>
   </url>
   
   <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</loc>
-    <lastmod>2016-12-29T12:36:32+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/</loc>
-    <lastmod>2017-01-19T23:22:33+01:00</lastmod>
   </url>
   
   <url>
@@ -135,7 +133,6 @@
   
   <url>
     <loc>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/</loc>
-    <lastmod>2016-12-29T12:35:23+01:00</lastmod>
   </url>
   
   <url>

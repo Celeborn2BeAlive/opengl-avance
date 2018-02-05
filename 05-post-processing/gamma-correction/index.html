@@ -205,17 +205,160 @@
         <div class="col middle-content page-content">
             <h1 class="section-title">Gamma correction</h1>
 
-            <div class="alert alert-info">
+            
 
-En construction
+<p>Un premiere filtre simple que nous allons appliquer à l&rsquo;image est la <strong>gamma correction</strong>. Ce filtre corrige les couleurs d&rsquo;une image pour tenir compte du rendu non linéaire des couleurs qu&rsquo;un moniteur affiche. Pour plus de détails consultez <a href="http://en.wikipedia.org/wiki/Gamma_correction">l&rsquo;article wikipedia</a> ou <a href="http://www.geeks3d.com/20101001/tutorial-gamma-correction-a-story-of-linearity/">cet article</a>.</p>
 
+<h1 id="gamma-correction">Gamma correction</h1>
+
+<p>Le principe de la correction gamma est d&rsquo;élever la valeur de tous les pixels (les 3 composantes R, G et B) à la puissance (1 / G) où G est la valeur de gamma. En general on prend G = 2.2, mais cette valeur doit être modifiable en temps réel dans votre application. Ce processus à pour effet de réhausser fortement les valeurs sombres par rapport aux valeurs claires.</p>
+
+<p>Algorithmiquement cela donne:</p>
+
+<ul>
+<li>Pour chaque pixel (i, j)
+
+<ul>
+<li>outImage(i, j) = pow(inputImage(i, j), 1 / G)</li>
+</ul></li>
+</ul>
+
+<p>Facile, non ? On va faire ça sur GPU.</p>
+
+<h1 id="le-compute-shader">Le Compute Shader</h1>
+
+<p>Ajoutez un fichier <strong>gammaCorrect.cs.glsl</strong> au repertoire des shaders de l&rsquo;application a remplissez le avec le code suivant (à réécrire, pas de copier-coller):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#75715e">#version 430</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="">layout</span><span style="">(</span><span style="">local_size_x</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="">local_size_y</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">)</span><span style=""> </span><span style="color:#66d9ef">in</span><span style="">;</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">void</span><span style=""> </span><span style="">main</span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#75715e">// todo</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
 </div>
+<p>Ce code à la structure de base d&rsquo;un compute shader. Un compute shader est destiné à être lancé en parallèle sur un grand nombre d&rsquo;unités de calcul. Ces unités de calcul correspondent aux coeurs GPU et sont les même qu&rsquo;en Cuda.</p>
+
+<p>Les unités sont répartis en groupes. La ligne:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="">layout</span><span style="">(</span><span style="">local_size_x</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="">local_size_y</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">)</span><span style=""> </span><span style="color:#66d9ef">in</span><span style="">;</span></code></pre>
+</div>
+<p>définit la taille des groupes de calcul, ici 1x1. Il est possible de partager des données entre différentes unités d&rsquo;un même groupe afin de construire des algorithmes parallèles élaborés. Ici nous faisons simple en spécifiant des groupes de taille 1x1 car nous n&rsquo;avons pas de donnés à partager pour la gamma correction (les executions sont completement indépendantes).</p>
+
+<p>Les compute shaders possèdent plusieurs variables d&rsquo;entrée prédéfinies:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">in</span><span style=""> </span><span style="">uvec3</span><span style=""> </span><span style="">gl_NumWorkGroups</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// Nombre de groupes lancés sur les 3 dimensions</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">in</span><span style=""> </span><span style="">uvec3</span><span style=""> </span><span style="">gl_WorkGroupID</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// ID du groupe actuel</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">in</span><span style=""> </span><span style="">uvec3</span><span style=""> </span><span style="">gl_LocalInvocationID</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// ID de l&#39;unité de calcul actuelle au sein de son groupe</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">in</span><span style=""> </span><span style="">uvec3</span><span style=""> </span><span style="">gl_GlobalInvocationID</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// ID de l&#39;unité de calcul actuelle au sein de toutes les unités</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">in</span><span style=""> </span><span style="">uint</span><span style="">  </span><span style="">gl_LocalInvocationIndex</span><span style="">;</span><span style=""> </span><span style="color:#75715e">// ID ramené entre 0 et le nombre d&#39;unité de calcul par groupe</span></code></pre>
+</div>
+<p>Pour plus de détails sur les compute shaders, il est important de <a href="https://www.khronos.org/opengl/wiki/Compute_Shader">lire cette page du wiki OpenGL</a>.</p>
+
+<p>La variable qui va nous servir pour faire la gamma correction est <strong>gl_GlobalInvocationID</strong>. L&rsquo;idée est d&rsquo;avoir une unité de calcul lancée pour chaque pixel de l&rsquo;image à traiter. C&rsquo;est cette variable qui nous permet d&rsquo;identifier l&rsquo;unité de calcul actuelle, et donc le pixel à traiter.</p>
+
+<p>Ajoutez la ligne:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">ivec2</span><span style=""> </span><span style="">pixelCoords</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">ivec2</span><span style="">(</span><span style="">gl_GlobalInvocationID</span><span style="">.</span><span style="">xy</span><span style="">);</span></code></pre>
+</div>
+<p>au main du shader. Ici on récupère les coordonnées du pixel à traiter à partir de l&rsquo;ID de l&rsquo;unité de calcul courante.</p>
+
+<p>Il va maintenant falloir traiter le pixel. Pour ça il faut lire sa valeur, qui doit venir d&rsquo;une image. Pour passer des informations à un compute shader, il faut passer par des variables uniformes. Une solution est donc de prendre en uniform un sampler2D qui nous permettra de lire la texture beauty et de lui appliquer le gamma.</p>
+
+<p>En réalité plutot que d&rsquo;utiliser un sampler2D, nous allons utiliser un nouveau type de variable GLSL permettant de lire/écrire des images: un image2D.</p>
+
+<p>Dans le shader avant le main ajoutez la ligne:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="">layout</span><span style="">(</span><span style="">rgba32f</span><span style="">,</span><span style=""> </span><span style="">binding</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">)</span><span style=""> </span><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="">readonly</span><span style=""> </span><span style="">image2D</span><span style=""> </span><span style="">uInputImage</span><span style="">;</span></code></pre>
+</div>
+<p>Cette déclaration peut paraitre compliquée, on va donc la décomposer:</p>
+
+<ul>
+<li>rgba32f indique le type de l&rsquo;image que nous allons fournir en entrée. GLSL impose de spécifier ce type lorsque l&rsquo;image n&rsquo;est pas en writeonly.</li>
+<li>binding = 0 indique que l&rsquo;image coté CPU devra être bindée sur l&rsquo;image unit 0 (à ne pas confondre avec les textures unit, mais le système est similaire) avant d&rsquo;executer le shader.</li>
+<li>readonly indique que nous allons seulement lire l&rsquo;image</li>
+<li>et image2D est simplement le type</li>
+</ul>
+
+<p>Cette variable uniform va nous permettre de lire l&rsquo;image d&rsquo;entrée, mais il faut également une image de sortie. Ajoutez à la suite:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="">layout</span><span style="">(</span><span style="">binding</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">1</span><span style="">)</span><span style=""> </span><span style="color:#66d9ef">uniform</span><span style=""> </span><span style="">writeonly</span><span style=""> </span><span style="">image2D</span><span style=""> </span><span style="">uOutputImage</span><span style="">;</span></code></pre>
+</div>
+<p>Ici le binding est 1, on devra donc binder l&rsquo;image de sortie sur l&rsquo;image unit 1 avant d&rsquo;executer le shader. On specifie que l&rsquo;image est en writeonly, on a donc pas besoin de specifier le type de l&rsquo;image.</p>
+
+<p>A nouveau, <a href="https://www.khronos.org/opengl/wiki/Image_Load_Store">une page du wiki à lire</a> concernant les images coté GLSL et CPU.</p>
+
+<p>Enfin coté uniformes, ajoutez une variable <strong>float uGammaExponent</strong> qui nous servira à indiquer au shader la valeur de gamma à appliquer.</p>
+
+<p>Il faut maintenant completer le main. Pour cela on doit:</p>
+
+<ul>
+<li>lire la valeur du pixel dans l&rsquo;image d&rsquo;entrée</li>
+<li>elever cette valeur à la puissance uGammaExponent</li>
+<li>écrire la nouvelle valeur dans l&rsquo;image de sortie.</li>
+</ul>
+
+<p>3 lignes de code donc. Pour cela utilisez les fonctions GLSL suivantes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">imageLoad</span><span style="">(</span><span style="">image2D</span><span style=""> </span><span style="">image</span><span style="color:#960050;background-color:#1e0010">​</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">ivec2</span><span style=""> </span><span style="">pixelCoords</span><span style="">);</span><span style=""> </span><span style="color:#75715e">// Lit un pixel</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">void</span><span style=""> </span><span style="">imageStore</span><span style="">(</span><span style="">image2D</span><span style=""> </span><span style="">image</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">ivec2</span><span style=""> </span><span style="">pixelCoords</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">data</span><span style="">);</span><span style=""> </span><span style="color:#75715e">// Ecrit un pixel</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">pow</span><span style="">(</span><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">valeur</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">vec4</span><span style=""> </span><span style="">exponent</span><span style="">);</span><span style=""> </span><span style="color:#75715e">// Fonction puissance</span></code></pre>
+</div>
+<h1 id="chargement-du-compute-shader">Chargement du Compute Shader</h1>
+
+<p>Coté C++ il faut charger le shader et récuperer les uniformes.</p>
+
+<p>Commencez par ajouter la variable membre <strong>glmlv::GLProgram m_gammaCorrectionProgram</strong> à la classe application. A l&rsquo;initialisation utilisez la fonction <strong>glmlv::loadProgram</strong> pour charger le shader <strong>gammaCorrect.cs.glsl</strong> (un seul chemin à mettre dans les accolades donc).</p>
+
+<p>Au niveau des uniformes il n&rsquo;y a en fait qu&rsquo;une seule location à récupérer: celle de <strong>uGammaExponent</strong>, à stocker dans une variable membre.</p>
+
+<p>Les deux autres (uInputImage et uOutputImage) n&rsquo;ont pas à être récupérer car nous avons spécifié leur binding directement dans le shader. Si ca n&rsquo;avait pas été le cas, il aurait fallut récupérer leur location et utiliser glUniform1i pour spécifier les images unit depuis le code C++ (comme pour les samplers).</p>
+
+<p>A ce stade essayez de lancer l&rsquo;executable afin de verifier que le shader compile bien.</p>
+
+<h1 id="la-texture-de-rendu">La texture de rendu</h1>
+
+<p>Nous allons avoir besoin d&rsquo;une nouvelle texture et d&rsquo;un FBO associé pour stocker l&rsquo;image après gamma correction. Comme vous l&rsquo;avez fait en introduction pour la beauty, rajoutez des variables membre <strong>GLuint m_GammaCorrectedBeautyTexture</strong> et <strong>GLuint m_GammaCorrectedBeautyFBO</strong> à la classe Application. Faites ce qu&rsquo;il faut à l&rsquo;initialisation pour que cette nouvelle texture et ce FBO soient fonctionnel.</p>
+
+<h1 id="l-appel-au-compute-shader">L&rsquo;appel au Compute Shader</h1>
+
+<p>Nous avons tout en place pour appeler le compute shader dans le code de rendu, après la shading pass:</p>
+
+<ol>
+<li>Utilisez le nouveau programme avec la methode use()</li>
+<li>Envoyez l&rsquo;uniforme uGammaExponent avec la fonction glUniform1f. Pour cela definissez une variablle gamma en haut de la fonction (initialisée à 2.2), et envoyez au shader la valeur (1 / gamma). Faites en sorte que gamma soit modifiable depuis la GUI en utilisant la fonction <strong>ImGui::InputFloat</strong></li>
+<li>Bindez les deux images sur les image units 0 et 1 en utilisant la fonction OpenGL <strong>glBindImageTexture</strong> (voir ci dessous pour le prototype).</li>
+<li>Enfin appelez la fonction <strong>glDispatchCompute</strong> pour lancer le compute shader.</li>
+</ol>
+
+<p>La fonction <strong>glBindImageTexture</strong> a le prototype suivant:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-glsl" data-lang="glsl"><span style="color:#66d9ef">void</span><span style=""> </span><span style="">glBindImageTexture</span><span style="">(</span><span style="">
+</span><span style="">    </span><span style="">GLuint</span><span style=""> </span><span style="">unit</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLuint</span><span style=""> </span><span style="">texture</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLint</span><span style=""> </span><span style="">level</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLboolean</span><span style=""> </span><span style="">layered</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLint</span><span style=""> </span><span style="">layer</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLenum</span><span style=""> </span><span style="">access</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="">GLenum</span><span style=""> </span><span style="">format</span><span style="">);</span></code></pre>
+</div>
+<p>Il faut appeler cette fonction 2 fois avec unit = 0 et 1 alternativement, et texture = m_BeautyTexture et m_GammaCorrectedTexture alternativement.
+Le paramètre access doit être mis à GL_READ_ONLY pour le premier appel et GL_WRITE_ONLY pour le second.</p>
+
+<p>Les autres paramètres doivent prendre les valeurs level = 0, layered = GL_FALSE, layer = 0 et format = GL_RGBA32F pour les deux appels.</p>
+
+<h1 id="le-blit-à-l-écran">Le blit à l&rsquo;écran</h1>
+
+<p>Il ne reste plus qu&rsquo;a afficher l&rsquo;image gamma corrected à l&rsquo;écran. Pour cela remplacez le binding de m_BeautyFBO par celui de m_GammaCorrectedBeautyFBO avant le blit à l&rsquo;écran.</p>
+
+<p>Lancez l&rsquo;executable et vérifiez que la modification du gamma depuis la GUI affecte bien l&rsquo;apparence de l&rsquo;image (un gamma plus elevé doit rendre l&rsquo;image plus claire).</p>
 
         </div>
 
         <div class="col side-menu side-menu-right page-content">
             <div class="toc-sidebar">
-
+<nav id="TableOfContents">
+<ul>
+<li><a href="#gamma-correction">Gamma correction</a></li>
+<li><a href="#le-compute-shader">Le Compute Shader</a></li>
+<li><a href="#chargement-du-compute-shader">Chargement du Compute Shader</a></li>
+<li><a href="#la-texture-de-rendu">La texture de rendu</a></li>
+<li><a href="#l-appel-au-compute-shader">L&rsquo;appel au Compute Shader</a></li>
+<li><a href="#le-blit-à-l-écran">Le blit à l&rsquo;écran</a></li>
+</ul>
+</nav>
 </div>
         </div>
     </div>
