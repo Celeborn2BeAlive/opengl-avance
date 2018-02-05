@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Qu&#39;est ce que OpenGL ? - OpenGL Avancé</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <style>
+        body
+        {
+          font-family: "Work Sans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+          color: #444444;
+        }
+
+        main
+        {
+          height:100vh;
+          margin-top: 56px;;
+        }
+
+        h1, h2, h3, h4, h5, h6
+        {
+          margin: 2.5rem 0 1.5rem 0;
+        }
+
+        h1.section-title
+        {
+          font-family: "Novacento Sans Wide", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+          text-align: center;
+          text-transform: uppercase;
+          font-size: 3.25rem;
+          margin: 1.0rem 0 1.5rem 0;
+          font-weight: 200;
+        }
+
+        main a:hover
+        {
+          text-decoration: none;
+        }
+
+        main table
+        {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        main img
+        {
+          width: 100%;
+        }
+
+        .jumbotron
+        {
+          background-color: #EEEEEE;
+        }
+
+        .page-content
+        {
+          padding-top: 16px;
+          padding-bottom: 1.5rem;
+        }
+
+        .main-article
+        {
+          margin-left: 15%;
+          margin-right: 15%;
+        }
+
+        .middle-content
+        {
+          text-align: justify;
+        }
+
+        .side-menu
+        {
+          background-color: #EEEEEE;
+          position: fixed;
+          width: 15%;
+          height: 100%;
+          font-size: 1.0em;
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+
+        .side-menu li li
+        {
+          font-size: 0.9em;
+          width: 100%;
+        }
+
+        .side-menu a
+        {
+          color: #555555;
+          font-weight: bold;
+        }
+
+        .side-menu a:hover
+        {
+          color: #CCCCCC;
+          background-color: #343A40;
+        }
+
+        .side-menu-left
+        {
+          left: 0px;
+        }
+
+        .side-menu-right
+        {
+          right: 0px;
+        }
+
+        .highlight
+        {
+          margin-bottom: 1rem;
+        }
+
+        .highlight pre
+        {
+          margin: auto;
+          padding: 1% 5% 1% 5%;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="https://Celeborn2BeAlive.github.io/opengl-avance/">OpenGL Avancé</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction">Introduction</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/pipeline">Forward Renderer</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/pipeline">Deferred Renderer</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction">Shadow Mapping</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction">Post Processing</a>
+            </li>
+        
+            <li class="nav-item active">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context">Cours et Doc</a>
+            </li>
+        
+
+
+
+      
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="main-article">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col side-menu side-menu-left page-content">
+            <ul class="nav flex-column">
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/">Qu&#39;est ce que OpenGL ?</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/">OpenGL Extensions</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/">Pipeline de Rendu</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/">OpenGL Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/">Buffer Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/">Vertex Array Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/">Texture et Sampler Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/">Framebuffer Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/">Shaders</a>
+        </li>
+    
+</ul>
+        </div>
+
+        <div class="col middle-content page-content">
+            <h1 class="section-title">Qu&#39;est ce que OpenGL ?</h1>
+
+            
+
+<p>OpenGL est une <a href="https://www.wikiwand.com/en/Application_programming_interface">API</a> permettant d&rsquo;effectuer du calcul parallèle sur GPU, principalement orienté sur la rasterisation de primitives simples (points, lignes et triangles) afin de les afficher dans une image.</p>
+
+<p>OpenGL <strong>n&rsquo;est pas</strong> une bibliothèque, mais simplement une <a href="https://www.opengl.org/registry/doc/glspec45.core.pdf">spécification</a> de fonctions permettant l&rsquo;utilisation d&rsquo;effectuer différent de taches de manière asynchrones, souvent centrées autour de la programmation graphique.</p>
+
+<p><a href="https://www.khronos.org/">Khronos</a> est le groupe chargé d&rsquo;établir la spécification de chaque version d&rsquo;OpenGL. Plusieurs <a href="https://www.khronos.org/members/list">entreprises/universités/personnes</a> font partie de ce groupe afin de faire avancer la spécification et s&rsquo;adapter à l&rsquo;évolution de l&rsquo;architecture du hardware.</p>
+
+<p>Les constructeurs de cartes graphiques implémentent ensuite cette spécification à travers un driver. Ainsi, pour faire de l&rsquo;OpenGL sur sa carte graphique, il suffit d&rsquo;installer un driver récent depuis le site du constructeur ou depuis le gestionnaire de paquet.</p>
+
+<p>Il est tout à fait possible d&rsquo;implémenter l&rsquo;ensemble des fonctions OpenGL dans une bibliothèque tournant sur CPU, c&rsquo;est par exemple le cas de <a href="http://www.mesa3d.org/">MESA</a>.</p>
+
+<h2 id="contexte-opengl">Contexte OpenGL</h2>
+
+<p>Le contexte OpenGL stocke l&rsquo;ensemble des données OpenGL pour votre application (ensemble des variables d&rsquo;état, tel que le status d&rsquo;activation du depth test, et les objets créés).</p>
+
+<p>La création du contexte OpenGL se fait le plus souvent à l&rsquo;ouverture d&rsquo;une fenêtre, par la bibliothèque bas niveau de gestion de fenêtre du systeme (X ou Wayland sous Linux, <a href="https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)">la Win32 API sous Windows</a>, etc.).</p>
+
+<p>On n&rsquo;a généralement pas à s&rsquo;en occuper puisqu&rsquo;il est courant de passer par une lib plus haur niveau de fenêtrage (SDL, GLFW, Qt, &hellip;).</p>
+
+<p>Plus d&rsquo;informations sur le Wiki:</p>
+
+<ul>
+<li><a href="https://www.khronos.org/opengl/wiki/OpenGL_Context">https://www.khronos.org/opengl/wiki/OpenGL_Context</a></li>
+<li><a href="https://www.khronos.org/opengl/wiki/Core_And_Compatibility_in_Contexts">https://www.khronos.org/opengl/wiki/Core_And_Compatibility_in_Contexts</a></li>
+<li><a href="https://www.khronos.org/opengl/wiki/Get_Context_Info">https://www.khronos.org/opengl/wiki/Get_Context_Info</a></li>
+</ul>
+
+<h2 id="calcul-asynchrone">Calcul Asynchrone</h2>
+
+<p>Il est important de bien comprendre que les fonction de rendu (glDraw*) OpenGL sont généralement asynchrone. Cela signifie qu&rsquo;elles ne sont pas executées immédiatement mais placées dans une command queue en attendant d&rsquo;être executées par le GPU.</p>
+
+<p>Cela permet au driver d&rsquo;optimiser l&rsquo;utilisation du GPU, et à l&rsquo;application de pouvoir faire autre chose pendant que le GPU calcule.</p>
+
+<p>La synchronisation entre CPU et GPU peut se faire implicitement via l&rsquo;appel à certaines fonctions qui necessitent que le rendu soit terminé (glfwSwapBuffers), ou explicitement à l&rsquo;aide des fonctions glFinish et glFlush.</p>
+
+<ul>
+<li><a href="https://www.khronos.org/opengl/wiki/Synchronization">https://www.khronos.org/opengl/wiki/Synchronization</a></li>
+</ul>
+
+<h2 id="chargement-des-fonctions-opengl-core-profile">Chargement des fonctions OpenGL Core Profile</h2>
+
+<p>OpenGL a un fonctionnement un peu particulier dans le sens ou il n&rsquo;existe pas de header déclarant l&rsquo;ensemble des fonctions OpenGL du core profile (i.e. OpenGL 3+).</p>
+
+<p>Le header GL.h ne déclare qu&rsquo;un nombre restreint de fonctions, principalement celles du compatibility profiles, dépréciées (glBegin, glEnd, glVertex3f, etc.).</p>
+
+<p>Pour pouvoir appeler les fonctions OpenGL 3+, il faut demander à la lib de fenetrage bas niveau des pointeurs de fonctions sur chacune de celles que l&rsquo;on veut utiliser.</p>
+
+<p>Comme c&rsquo;est une tache particulièrement ennuyante, répétitive et ininteressante, on passe généralement par une bibliothèque dediée qui va charger tous les pointeurs de fonction d&rsquo;un coup et nous les exposer dans des variables globales.</p>
+
+<p>La lib la plus utilisée est sans doute <a href="http://glew.sourceforge.net/">GLEW</a>, mais je vous recommande chaudement <a href="http://glad.dav1d.de/">GLAD</a> qui à les avantages suivants:</p>
+
+<ul>
+<li>facile à compiler et linker, aussi bien sous windows que sous linux</li>
+<li>possibilité de customiser entièrement ce qu&rsquo;elle contient via le site (choix de la version d&rsquo;OpenGL, choix du profile, ajout d&rsquo;extensions, etc.)</li>
+</ul>
+
+        </div>
+
+        <div class="col side-menu side-menu-right page-content">
+            <div class="toc-sidebar">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#contexte-opengl">Contexte OpenGL</a></li>
+<li><a href="#calcul-asynchrone">Calcul Asynchrone</a></li>
+<li><a href="#chargement-des-fonctions-opengl-core-profile">Chargement des fonctions OpenGL Core Profile</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+<script>
+$(".toc-sidebar ul").addClass("nav flex-column");
+$(".toc-sidebar li").addClass("nav-item");
+$(".toc-sidebar a").addClass("nav-link");
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cours et Doc on OpenGL Avancé</title>
+    <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/</link>
+    <description>Recent content in Cours et Doc on OpenGL Avancé</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <copyright>Copyright (c) 2017, Laurent NOEL; All rights reserved.</copyright>
+    <lastBuildDate>Thu, 19 Jan 2017 23:51:42 +0100</lastBuildDate>
+    
+	<atom:link href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Qu&#39;est ce que OpenGL ?</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/</link>
+      <pubDate>Thu, 19 Jan 2017 23:51:42 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/</guid>
+      <description>OpenGL est une API permettant d&amp;rsquo;effectuer du calcul parallèle sur GPU, principalement orienté sur la rasterisation de primitives simples (points, lignes et triangles) afin de les afficher dans une image.
+OpenGL n&amp;rsquo;est pas une bibliothèque, mais simplement une spécification de fonctions permettant l&amp;rsquo;utilisation d&amp;rsquo;effectuer différent de taches de manière asynchrones, souvent centrées autour de la programmation graphique.
+Khronos est le groupe chargé d&amp;rsquo;établir la spécification de chaque version d&amp;rsquo;OpenGL. Plusieurs entreprises/universités/personnes font partie de ce groupe afin de faire avancer la spécification et s&amp;rsquo;adapter à l&amp;rsquo;évolution de l&amp;rsquo;architecture du hardware.</description>
+    </item>
+    
+    <item>
+      <title>OpenGL Extensions</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/</link>
+      <pubDate>Fri, 20 Jan 2017 00:05:53 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/</guid>
+      <description>Le méchanisme d&amp;rsquo;extensions OpenGL permet aux constructeurs de carte graphique d&amp;rsquo;ajouter à l&amp;rsquo;API des fonctionnalités avancées qui ne sont pas encore présentes dans le Core profile.
+Il est assez standard d&amp;rsquo;utiliser des extensions OpenGL et d&amp;rsquo;adapter son moteur en fonction des extensions disponibles sur la carte graphique de l&amp;rsquo;utilisateur.
+Le nom des extensions suit une nomenclature assez précises. Il y a 3 types d&amp;rsquo;extensions:
+ Propriétaires: Spécifiques à un seul constructeur.</description>
+    </item>
+    
+    <item>
+      <title>Pipeline de Rendu</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/</link>
+      <pubDate>Thu, 19 Jan 2017 23:57:26 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/</guid>
+      <description>Cette page du wiki décrit l&amp;rsquo;ensemble du pipeline de rendu OpenGL.
+Le schéma suivant illustre ce pipeline (source):
+Et ce schéma entre dans le détail de chaque étape (un joli poster à accrocher au mur :p)</description>
+    </item>
+    
+    <item>
+      <title>OpenGL Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:52:53 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/</guid>
+      <description>Les objets OpenGL représentent des conteneurs d&amp;rsquo;état du contexte OpenGL. Lorsqu&amp;rsquo;un objet est bindé sur l&amp;rsquo;état correspondant, tous les changement sur cet état sont stocké dans l&amp;rsquo;objet bindé.
+A lire: https://www.khronos.org/opengl/wiki/OpenGL_Object
+Il existe différents types d&amp;rsquo;objets OpenGL, ceux que nous utilisons dans ces TPs étant:
+ Buffer Object: représente un tableau de données pouvant être stocké en mémoire GPU. Vertex Array Object: représente la spécification des sommets et leurs rangement aux seins d&amp;rsquo;un ou plusieurs buffer objets.</description>
+    </item>
+    
+    <item>
+      <title>Buffer Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:15 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/</guid>
+      <description>Pages du wiki à lire:
+ Buffer Object Buffer Object Streaming Shader Storage Buffer Object Uniform Buffer Object  </description>
+    </item>
+    
+    <item>
+      <title>Vertex Array Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:25 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/</guid>
+      <description>Pages du wiki à lire:
+ Vertex Specification Vertex Array Object Vertex Buffer Object Index buffers  </description>
+    </item>
+    
+    <item>
+      <title>Texture et Sampler Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:40 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/</guid>
+      <description>Pages du wiki à lire:
+ Texture Image Format Sampler Object Cubemap Texture Buffer Texture Array Texture  </description>
+    </item>
+    
+    <item>
+      <title>Framebuffer Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:49 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/</guid>
+      <description>Pages du wiki à lire:
+ Framebuffer Object Default Framebuffer  </description>
+    </item>
+    
+    <item>
+      <title>Shaders</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/</link>
+      <pubDate>Thu, 19 Jan 2017 23:57:43 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/</guid>
+      <description>Les shaders sont de cours programmes compilés pour fonctionner sur carte graphique, dans les stages dit programmables du pipeline.
+Plusieurs languages de shading existent mais nous utilisons GLSL dans ces TPs car OpenGL fournie une API et compilation et link pour ce language.
+A lire: https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language
+Différents types de shaders existent, ceux que nous utilisons dans ces TPs sont:
+ Vertex Shaders: Se charge du calcul par sommet. Généralement il projete le sommet en entrée sur l&amp;rsquo;écran afin que les triangles soit prêt pour la rasterisation.</description>
+    </item>
+    
+  </channel>
+</rss>

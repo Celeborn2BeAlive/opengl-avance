@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Introduction on OpenGL Avancé</title>
+    <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/</link>
+    <description>Recent content in Introduction on OpenGL Avancé</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <copyright>Copyright (c) 2017, Laurent NOEL; All rights reserved.</copyright>
+    <lastBuildDate>Thu, 29 Dec 2016 11:34:23 +0100</lastBuildDate>
+    
+	<atom:link href="https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</link>
+      <pubDate>Thu, 29 Dec 2016 11:34:23 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</guid>
+      <description>Objectifs  Approfondir les connaissances en OpenGL Moderne Premières implémentations de techniques avancées Projet: Demo  Prérequis  Bonne connaissance du pipeline de rendu OpenGL Maitrise des TDs des années précédentes Maitrise de base du C++  Quelle version d&amp;rsquo;OpenGL ? La version installée sur les machines de la fac est la 4.4, nous prendrons donc cette version comme base.
+En plus de cela, et si votre carte graphique le permet, il vous sera possible de travailler avec l&amp;rsquo;extension GL_ARB_direct_state_access (DSA) qui simplifie grandement la manipulation d&amp;rsquo;objets OpenGL (pas besoin de binder les objets pour les manipuler).</description>
+    </item>
+    
+    <item>
+      <title>Repo Github</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/repo-github/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/repo-github/</guid>
+      <description>Git ? Si vous ne connaissez pas, Git est un système distribué de gestion de version: un logiciel permettant d&amp;rsquo;enregistrer au fur à mesure les modifications du code source d&amp;rsquo;un projet, de manière partagé entre plusieurs utilisateur.
+On peut ainsi facilement revenir en arrière, partager du code, controler qui fait quoi, gérer plusieurs versions, etc.
+L&amp;rsquo;objectif de ces TDs n&amp;rsquo;est pas d&amp;rsquo;apprendre à utiliser Git, mais il sera pratique pour moi de suivre votre progression et de récupérer votre projet grace à un repo Git publique.</description>
+    </item>
+    
+    <item>
+      <title>Fiche d&#39;information</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</guid>
+      <description>Remplissez cette fiche: https://goo.gl/forms/ffuXJJ1vYCAvUA7s1 ça m&amp;rsquo;aidera.</description>
+    </item>
+    
+    <item>
+      <title>Software Development Kit</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/sdk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/sdk/</guid>
+      <description>Le repository que vous avez forké et cloné contient un SDK pour coder les TDs. Cette partie explique comment compiler les applications d&amp;rsquo;exemple, vos futures applications, la structure du repertoire et les spécifité du fichier CMake.
+Compilation  Avec CMake Support de GCC 5+ (sans boost), GCC 4.9.2 (boost requis) et Visual Studio 2015 (sans boost) (devrait aussi fonctionner avec Visual 2017, mais je n&amp;rsquo;ai pas encore testé)  CMake est un logiciel permettant de générer une solution de compilation adaptée au système sur lequel on l&#39;execute.</description>
+    </item>
+    
+    <item>
+      <title>Projet</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/projet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/projet/</guid>
+      <description>L&amp;rsquo;objectif du projet est de développer une demo, au sens &amp;ldquo;Demoscene&amp;rdquo;, c&amp;rsquo;est à dire une application jouant une animation 3D. Quelques exemples de demo.
+Le thème imposé est le suivant: Star Wars (grosse originalité). Si vous n&amp;rsquo;aimez pas Star Wars, vous n&amp;rsquo;aurez qu&amp;rsquo;à exprimer cette haine dans votre démo, ou le mixer avec un autre thème de votre choix.
+En general les elements d&amp;rsquo;une demo sont procéduraux (générés aléatoirement), mais ce n&amp;rsquo;est pas obligatoire pour le projet (vous pouvez charger des modèles 3D et textures, vous devriez pouvoir trouver facilement des vaisseaux sur le net).</description>
+    </item>
+    
+    <item>
+      <title>Liens OpenGL</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/liens/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/liens/</guid>
+      <description>Le plus important, à toujours avoir sous le coude:
+ Le Wiki OpenGL Une version digeste de la documentation OpenGL/GLSL La reference card OpenGL 4.4  Et quelques liens utiles pour OpenGL:
+ Mes TDs OpenGL 3+ écris pour les Imacs 2 Des tutoriaux OpenGL 3+ Plein d&amp;rsquo;autres tutos OpenGL 3+ en francais Une énorme liste d&amp;rsquo;exemples de code OpenGL  </description>
+    </item>
+    
+  </channel>
+</rss>

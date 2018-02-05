@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>OpenGL Extensions - OpenGL Avancé</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <style>
+        body
+        {
+          font-family: "Work Sans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+          color: #444444;
+        }
+
+        main
+        {
+          height:100vh;
+          margin-top: 56px;;
+        }
+
+        h1, h2, h3, h4, h5, h6
+        {
+          margin: 2.5rem 0 1.5rem 0;
+        }
+
+        h1.section-title
+        {
+          font-family: "Novacento Sans Wide", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+          text-align: center;
+          text-transform: uppercase;
+          font-size: 3.25rem;
+          margin: 1.0rem 0 1.5rem 0;
+          font-weight: 200;
+        }
+
+        main a:hover
+        {
+          text-decoration: none;
+        }
+
+        main table
+        {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        main img
+        {
+          width: 100%;
+        }
+
+        .jumbotron
+        {
+          background-color: #EEEEEE;
+        }
+
+        .page-content
+        {
+          padding-top: 16px;
+          padding-bottom: 1.5rem;
+        }
+
+        .main-article
+        {
+          margin-left: 15%;
+          margin-right: 15%;
+        }
+
+        .middle-content
+        {
+          text-align: justify;
+        }
+
+        .side-menu
+        {
+          background-color: #EEEEEE;
+          position: fixed;
+          width: 15%;
+          height: 100%;
+          font-size: 1.0em;
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+
+        .side-menu li li
+        {
+          font-size: 0.9em;
+          width: 100%;
+        }
+
+        .side-menu a
+        {
+          color: #555555;
+          font-weight: bold;
+        }
+
+        .side-menu a:hover
+        {
+          color: #CCCCCC;
+          background-color: #343A40;
+        }
+
+        .side-menu-left
+        {
+          left: 0px;
+        }
+
+        .side-menu-right
+        {
+          right: 0px;
+        }
+
+        .highlight
+        {
+          margin-bottom: 1rem;
+        }
+
+        .highlight pre
+        {
+          margin: auto;
+          padding: 1% 5% 1% 5%;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="https://Celeborn2BeAlive.github.io/opengl-avance/">OpenGL Avancé</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction">Introduction</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/pipeline">Forward Renderer</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/pipeline">Deferred Renderer</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction">Shadow Mapping</a>
+            </li>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction">Post Processing</a>
+            </li>
+        
+            <li class="nav-item active">
+                <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context">Cours et Doc</a>
+            </li>
+        
+
+
+
+      
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="main-article">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col side-menu side-menu-left page-content">
+            <ul class="nav flex-column">
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/">Qu&#39;est ce que OpenGL ?</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/">OpenGL Extensions</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/">Pipeline de Rendu</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/">OpenGL Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/">Buffer Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/">Vertex Array Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/">Texture et Sampler Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/">Framebuffer Objects</a>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/">Shaders</a>
+        </li>
+    
+</ul>
+        </div>
+
+        <div class="col middle-content page-content">
+            <h1 class="section-title">OpenGL Extensions</h1>
+
+            
+
+<p>Le méchanisme d&rsquo;extensions OpenGL permet aux constructeurs de carte graphique d&rsquo;ajouter à l&rsquo;API des fonctionnalités avancées qui ne sont pas encore présentes dans le Core profile.</p>
+
+<p>Il est assez standard d&rsquo;utiliser des extensions OpenGL et d&rsquo;adapter son moteur en fonction des extensions disponibles sur la carte graphique de l&rsquo;utilisateur.</p>
+
+<p>Le nom des extensions suit une nomenclature assez précises. Il y a 3 types d&rsquo;extensions:</p>
+
+<ul>
+<li>Propriétaires: Spécifiques à un seul constructeur. Par exemple les extensions préfixées par GL_NV sont spécifiques aux GPU de NVidia.</li>
+<li>Génériques: Généralement implémentées par un grand nombre de constructeurs. Préfixées par GL_EXT</li>
+<li>ARB: Extensions génériques approuvées par l&rsquo;<a href="https://www.opengl.org/archives/about/arb/">OpenGL ARB</a>, destinées à entrer dans le Core profile d&rsquo;une future version d&rsquo;OpenGL.</li>
+</ul>
+
+<p>Les extensions sont détaillées dans un fichier texte dedié assez difficile à lire (exemple: <a href="https://www.opengl.org/registry/specs/ARB/vertex_array_object.txt">https://www.opengl.org/registry/specs/ARB/vertex_array_object.txt</a>) car il mentionne des additions, suppressions ou modifications dans la spécification générale d&rsquo;OpenGL.</p>
+
+<p>Plus d&rsquo;infos sur le Wiki: <a href="https://www.khronos.org/opengl/wiki/OpenGL_Extension">https://www.khronos.org/opengl/wiki/OpenGL_Extension</a></p>
+
+<p>Pour savoir si une extension OpenGL est proposée par votre driver, vous pouvez utiliser la commande *glxinfo sous Linux (<em>nvidia-config &ndash;glxinfo</em> sous certains système) et piper le résultat dans un grep du nom de l&rsquo;extension recherchée. Sous windows vous pouvez passer par un utilitaire tel que <a href="http://realtech-vr.com/admin/glview">GLview</a>.</p>
+
+<p>Quelques extensions très interessantes:</p>
+
+<h2 id="direct-state-access">Direct State Access</h2>
+
+<p>L&rsquo;extension Direct State Access (DSA) (<a href="https://www.opengl.org/registry/specs/EXT/direct_state_access.txt">GL_EXT_direct_state_access</a>, puis <a href="https://www.opengl.org/registry/specs/ARB/direct_state_access.txt">GL_ARB_direct_state_access</a>, puis introduite en Core 4.5) propose une nouvelle manière de modifier/accéder aux objets OpenGL, sans avoir à les binder.</p>
+
+<p>Cela permet d&rsquo;éviter de se préoccuper de l&rsquo;état global du contexte OpenGL lorsque l&rsquo;on veut manipuler les objets OpenGL et ainsi d&rsquo;éviter un grand nombre d&rsquo;erreurs de programmation.</p>
+
+<div class="alert alert-warning">
+
+Cette extension n'est pas disponible sur toutes les cartes graphiques. En particulier les machines de la FAC n'en sont pas equipées entièrement (il y a l'extension <strong>GL_EXT_direct_state_access</strong> qui n'est que partielle). Si vous n'y avez pas accès, ne l'utilisez pas: cette extension ne fournit que des facilités de programmation, pas de fonctionnalité en plus.
+
+</div>
+
+<p>Cette extension est très pratique car elle permet d&rsquo;éviter de binder les objets OpenGL pour les manipuler (on passe aux fonctions directement l&rsquo;identifiant de l&rsquo;objet), et donc d&rsquo;éviter les erreurs liées au mécanisme de binding. Je vous conseille donc de l&rsquo;utiliser autant que possible.</p>
+
+<p><a href="https://www.opengl.org/registry/specs/ARB/direct_state_access.txt">Lien vers le document de référence</a>.</p>
+
+<p>Voici des exemples de code en version OpenGL 3 classique et en version Direct State Access (directement tiré du document):</p>
+
+<h2 id="example-1-creating-a-buffer-object-without-polluting-the-opengl-states">Example 1: Creating a buffer object without polluting the OpenGL states</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// Bind to Create
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">CreateBuffer</span><span style="">()</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// Save the previous bound buffer
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">restoreBuffer</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">GL_ARRAY_BUFFER_BINDING</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">restoreBuffer</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// Reserve the buffer name and create the buffer object
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">uint</span><span style=""> </span><span style="">buffer</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGenBuffers</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">buffer</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">buffer</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// Restaure the previous bound buffer to avoid polluting
+</span><span style="color:#75715e"></span><span style="">  </span><span style="color:#75715e">// the rendering states
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">restoreBuffer</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">buffer</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#75715e">// Direct State Access
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">CreateBuffer</span><span style="">()</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">buffer</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glCreateBuffer</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">buffer</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">buffer</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+<h2 id="example-2-creating-a-vertex-array-object-without-polluting-the-opengl-states">Example 2: Creating a vertex array object without polluting the OpenGL states</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// OpenGL 3.0 Bind to Create for vertex array object
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">CreateVertexArray</span><span style="">(</span><span style="">GLuint</span><span style=""> </span><span style="">BufferName</span><span style="">[])</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// Save the previous bound vertex array and array buffer
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">restoreVertexArray</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">GL_VERTEX_ARRAY_BINDING</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">restoreVertexArray</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">restoreBuffer</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">GL_ARRAY_BUFFER_BINDING</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">restoreBuffer</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glGenVertexArrays</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">VertexArrayName</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glBindVertexArray</span><span style="">(</span><span style="">VertexArrayName</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">VERTEX</span><span style="">]);</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribPointer</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">      </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">sizeof</span><span style="">(</span><span style="">glf</span><span style="color:#f92672">::</span><span style="">vertex_v2fv2f</span><span style="">),</span><span style=""> </span><span style="">BUFFER_OFFSET</span><span style="">(</span><span style="color:#ae81ff">0</span><span style="">));</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribPointer</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">      </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">sizeof</span><span style="">(</span><span style="">glf</span><span style="color:#f92672">::</span><span style="">vertex_v2fv2f</span><span style="">),</span><span style=""> </span><span style="">BUFFER_OFFSET</span><span style="">(</span><span style="color:#66d9ef">sizeof</span><span style="">(</span><span style="">glm</span><span style="color:#f92672">::</span><span style="">vec2</span><span style="">)));</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ELEMENT_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">ELEMENT</span><span style="">]);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// The GL_ARRAY_BUFFER_BINDING is a context state, not a vertex array state.
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">restoreBuffer</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glBindVertexArray</span><span style="">(</span><span style="">restoreVertexArray</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">vertexArrayName</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#75715e">// OpenGL 4.3 Bind to Create for vertex array object
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">CreateVertexArray</span><span style="">(</span><span style="">GLuint</span><span style=""> </span><span style="">BufferName</span><span style="">[])</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// Save the previous bound vertex array
+</span><span style="color:#75715e"></span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">restoreVertexArray</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">GL_VERTEX_ARRAY_BINDING</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">restoreVertexArray</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">vertexArrayName</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGenVertexArrays</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">vertexArrayName</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glBindVertexArray</span><span style="">(</span><span style="">VertexArrayName</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribBinding</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribFormat</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">      </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribBinding</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="">glVertexAttribFormat</span><span style="">(</span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">      </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">sizeof</span><span style="">(</span><span style="color:#66d9ef">float</span><span style="">)</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="">glBindBuffer</span><span style="">(</span><span style="">GL_ELEMENT_ARRAY_BUFFER</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">ELEMENT</span><span style="">]);</span><span style="">
+</span><span style="">    </span><span style="">glBindVertexBuffer</span><span style="">(</span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">VERTEX</span><span style="">],</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glBindVertexArray</span><span style="">(</span><span style="">restoreVertexArray</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">vertexArrayName</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#75715e">// Direct State Access
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">CreateVertexArray</span><span style="">(</span><span style="">GLuint</span><span style=""> </span><span style="">BufferName</span><span style="">[])</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">vertexArrayName</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glCreateVertexArrays</span><span style="">(</span><span style="color:#ae81ff">1</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">vertexArrayName</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glEnableVertexAttribArray</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayAttribBinding</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayAttribFormat</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">POSITION</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">    </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayAttribBinding</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayAttribFormat</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">semantic</span><span style="color:#f92672">::</span><span style="">attr</span><span style="color:#f92672">::</span><span style="">TEXCOORD</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">,</span><span style=""> </span><span style="">GL_FLOAT</span><span style="">,</span><span style=""> 
+</span><span style="">    </span><span style="">GL_FALSE</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">sizeof</span><span style="">(</span><span style="color:#66d9ef">float</span><span style="">)</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayElementBuffer</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">ELEMENT</span><span style="">]);</span><span style="">
+</span><span style="">  </span><span style="">glVertexArrayVertexBuffer</span><span style="">(</span><span style="">VertexArrayName</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="">BufferName</span><span style="">[</span><span style="">buffer</span><span style="color:#f92672">::</span><span style="">VERTEX</span><span style="">],</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">vertexArrayName</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+<h2 id="example-3-querying-the-bound-texture-to-a-texture-image-unit-for-debugging">Example 3: Querying the bound texture to a texture image unit for debugging</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// Select to query
+</span><span style="color:#75715e">// We need the &lt;target&gt; or we need to loop over all the possible targets
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">GetBoundTexture</span><span style="">(</span><span style="">GLenum</span><span style=""> </span><span style="">target</span><span style="">,</span><span style=""> </span><span style="">GLuint</span><span style=""> </span><span style="">unit</span><span style="">)</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">restore</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">GL_ACTIVE_TEXTURE</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">restore</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glActiveTexture</span><span style="">(</span><span style="">unit</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">name</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegerv</span><span style="">(</span><span style="">target</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">name</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="">glActiveTexture</span><span style="">(</span><span style="">restore</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">}</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#75715e">// Direct State Access
+</span><span style="color:#75715e">// target_binding is e.g. GL_TEXTURE_BINDING_2D for the 2D texture
+</span><span style="color:#75715e"></span><span style="">GLuint</span><span style=""> </span><span style="color:#a6e22e">GetBoundTexture</span><span style="">(</span><span style="">GLenum</span><span style=""> </span><span style="">target_binding</span><span style="">,</span><span style=""> </span><span style="">GLuint</span><span style=""> </span><span style="">unit</span><span style="">)</span><span style="">
+</span><span style=""></span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="">GLuint</span><span style=""> </span><span style="">name</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style="">  </span><span style="">glGetIntegeri_v</span><span style="">(</span><span style="">target_binding</span><span style="">,</span><span style=""> </span><span style="">unit</span><span style="">,</span><span style=""> </span><span style="color:#f92672">&amp;</span><span style="">name</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="">name</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+<h2 id="debug-output">Debug Output</h2>
+
+<p>L&rsquo;extension Debug Output (<a href="https://www.opengl.org/registry/specs/ARB/debug_output.txt">GL_ARB_debug_output</a>, puis introduite en Core 4.3) à fait beaucoup de bien aux développeurs OpenGL puisqu&rsquo;elle fournit un méchanisme de messages d&rsquo;erreurs bien plus efficace que l&rsquo;ignoble fonction <em>glGetError</em>.</p>
+
+<p>L&rsquo;idée est de donner une fonction de callback à OpenGL qui sera appelée par l&rsquo;implémentation dès qu&rsquo;une erreur est rencontrée. Il est de plus possible de filtrer de manière assez fine les erreurs/warning à ignorer.</p>
+
+        </div>
+
+        <div class="col side-menu side-menu-right page-content">
+            <div class="toc-sidebar">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#direct-state-access">Direct State Access</a></li>
+<li><a href="#example-1-creating-a-buffer-object-without-polluting-the-opengl-states">Example 1: Creating a buffer object without polluting the OpenGL states</a></li>
+<li><a href="#example-2-creating-a-vertex-array-object-without-polluting-the-opengl-states">Example 2: Creating a vertex array object without polluting the OpenGL states</a></li>
+<li><a href="#example-3-querying-the-bound-texture-to-a-texture-image-unit-for-debugging">Example 3: Querying the bound texture to a texture image unit for debugging</a></li>
+<li><a href="#debug-output">Debug Output</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+<script>
+$(".toc-sidebar ul").addClass("nav flex-column");
+$(".toc-sidebar li").addClass("nav-item");
+$(".toc-sidebar a").addClass("nav-link");
+</script>
+
+
+
+</body>
+</html>

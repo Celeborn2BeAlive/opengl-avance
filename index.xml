@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenGL Avancé</title>
+    <link>https://Celeborn2BeAlive.github.io/opengl-avance/</link>
+    <description>Recent content on OpenGL Avancé</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <copyright>Copyright (c) 2017, Laurent NOEL; All rights reserved.</copyright>
+    <lastBuildDate>Thu, 19 Jan 2017 23:51:42 +0100</lastBuildDate>
+    
+	<atom:link href="https://Celeborn2BeAlive.github.io/opengl-avance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Qu&#39;est ce que OpenGL ?</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/</link>
+      <pubDate>Thu, 19 Jan 2017 23:51:42 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-context/</guid>
+      <description>OpenGL est une API permettant d&amp;rsquo;effectuer du calcul parallèle sur GPU, principalement orienté sur la rasterisation de primitives simples (points, lignes et triangles) afin de les afficher dans une image.
+OpenGL n&amp;rsquo;est pas une bibliothèque, mais simplement une spécification de fonctions permettant l&amp;rsquo;utilisation d&amp;rsquo;effectuer différent de taches de manière asynchrones, souvent centrées autour de la programmation graphique.
+Khronos est le groupe chargé d&amp;rsquo;établir la spécification de chaque version d&amp;rsquo;OpenGL. Plusieurs entreprises/universités/personnes font partie de ce groupe afin de faire avancer la spécification et s&amp;rsquo;adapter à l&amp;rsquo;évolution de l&amp;rsquo;architecture du hardware.</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</link>
+      <pubDate>Thu, 29 Dec 2016 11:34:23 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/introduction/</guid>
+      <description>Objectifs  Approfondir les connaissances en OpenGL Moderne Premières implémentations de techniques avancées Projet: Demo  Prérequis  Bonne connaissance du pipeline de rendu OpenGL Maitrise des TDs des années précédentes Maitrise de base du C++  Quelle version d&amp;rsquo;OpenGL ? La version installée sur les machines de la fac est la 4.4, nous prendrons donc cette version comme base.
+En plus de cela, et si votre carte graphique le permet, il vous sera possible de travailler avec l&amp;rsquo;extension GL_ARB_direct_state_access (DSA) qui simplifie grandement la manipulation d&amp;rsquo;objets OpenGL (pas besoin de binder les objets pour les manipuler).</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/introduction/</guid>
+      <description>Nous avons jusqu&amp;rsquo;a présent calculé l&amp;rsquo;éclairage des lumières sans prise en compte des ombres portées par les objets: la lumière passe à travers&amp;hellip;
+Pour savoir si un fragment est dans la lumière ou dans l&amp;rsquo;ombre par rapport à une light donnée, il faut savoir si un objet intersecte le rayon connectant le fragment à la lumière. Il y a plusieurs moyens de calculer cette information. Deux méthodes sont principalement utilisées en rendu temps réel: le shadow mapping et les shadow volumes.</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/introduction/</guid>
+      <description>L&amp;rsquo;objectif de ce dernier tutoriel est d&amp;rsquo;apprendre à appliquer des traitements à l&amp;rsquo;image après que celle ci ait été rendue. On appelle ça le post-processing.
+Il y a plusieurs manière de faire du post-processing en OpenGL. La plus classique est d&amp;rsquo;utiliser un fragment shader qui prend en entrée une texture contenant l&amp;rsquo;image à traiter. Cela ressemble beaucoup à la shading pass du deferred rendering (la shading pass peut être vu comme un post-process du GBuffer).</description>
+    </item>
+    
+    <item>
+      <title>Pipeline de rendu</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/pipeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/pipeline/</guid>
+      <description>Le forward shading (ou forward rendering) est le rendu &amp;ldquo;classique&amp;rdquo; OpenGL que vous avez normalement vu l&amp;rsquo;année dernière. Cette partie est donc une série d&amp;rsquo;exercices pour implémenter rapidement un forward renderer afin de se remettre tranquilement dans le bain.
+Pour chaque objet de la scène, un forward renderer &amp;ldquo;envoie&amp;rdquo; la géométrie de l&amp;rsquo;objet dans un vertex shader afin de projeter les sommets à l&amp;rsquo;écran. La carte graphique rasterise alors les triangles projetés pour produire des fragments.</description>
+    </item>
+    
+    <item>
+      <title>Pipeline de rendu</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/pipeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/pipeline/</guid>
+      <description>Un problème ? Un problème bien connu du forward shading est le traitement par le fragment shader de fragments qui ne seront pas visible à l&amp;rsquo;écran. Tous les fragment occultés par d&amp;rsquo;autre fragments sont traités car le fragment shader peut potentiellement modifier la profondeur des fragments et donc les rendre visible. Ainsi, si le fragment shader est complexe, tous ces calculs inutiles peuvent devenir couteux.
+En plus de cela, il est assez difficile en une seule passe de rendu de pouvoir optimiser son algorithme pour faire moins de calcul.</description>
+    </item>
+    
+    <item>
+      <title>OpenGL Extensions</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/</link>
+      <pubDate>Fri, 20 Jan 2017 00:05:53 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-extensions/</guid>
+      <description>Le méchanisme d&amp;rsquo;extensions OpenGL permet aux constructeurs de carte graphique d&amp;rsquo;ajouter à l&amp;rsquo;API des fonctionnalités avancées qui ne sont pas encore présentes dans le Core profile.
+Il est assez standard d&amp;rsquo;utiliser des extensions OpenGL et d&amp;rsquo;adapter son moteur en fonction des extensions disponibles sur la carte graphique de l&amp;rsquo;utilisateur.
+Le nom des extensions suit une nomenclature assez précises. Il y a 3 types d&amp;rsquo;extensions:
+ Propriétaires: Spécifiques à un seul constructeur.</description>
+    </item>
+    
+    <item>
+      <title>Pipeline de Rendu</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/</link>
+      <pubDate>Thu, 19 Jan 2017 23:57:26 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/gpu-pipeline/</guid>
+      <description>Cette page du wiki décrit l&amp;rsquo;ensemble du pipeline de rendu OpenGL.
+Le schéma suivant illustre ce pipeline (source):
+Et ce schéma entre dans le détail de chaque étape (un joli poster à accrocher au mur :p)</description>
+    </item>
+    
+    <item>
+      <title>Directional Shadow Map</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/dir-shadow-map/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/dir-shadow-map/</guid>
+      <description>Nous allons commencer par l&amp;rsquo;utilisation du shadow mapping pour une lumière directionnelle, qui est plus simple.
+Il y a globalement quatre partie à coder:
+ Initialisation: Allocation des données OpenGL nécessaire à l&amp;rsquo;algorithme Shaders: Coder les shaders nécessaire à la création de la shadow map. Création de la shadow map: A faire au rendu des que la direction de la lumière est modifiée. Il s&amp;rsquo;agit de calculer la depth map selon le point de vue de la light.</description>
+    </item>
+    
+    <item>
+      <title>Gamma correction</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/gamma-correction/</guid>
+      <description>Un premiere filtre simple que nous allons appliquer à l&amp;rsquo;image est la gamma correction. Ce filtre corrige les couleurs d&amp;rsquo;une image pour tenir compte du rendu non linéaire des couleurs qu&amp;rsquo;un moniteur affiche. Pour plus de détails consultez l&amp;rsquo;article wikipedia ou cet article.
+Gamma correction Le principe de la correction gamma est d&amp;rsquo;élever la valeur de tous les pixels (les 3 composantes R, G et B) à la puissance (1 / G) où G est la valeur de gamma.</description>
+    </item>
+    
+    <item>
+      <title>Geometrie</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/geometrie/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/geometrie/</guid>
+      <description>Vous aurez un écran noir jusqu&amp;rsquo;a la fin de la première partie de l&amp;rsquo;exercice Transformations: OpenGL demande généralement beaucoup de code d&amp;rsquo;initialisation avant de pouvoir afficher quelque chose.
+ Vous allez commencer par dessiner des cubes et spheres en 3D. La lib glmlv contient deux fonctions makeCube() et makeSphere() (simple_geometry.hpp) permettant de construire des tableaux de sommets et indices pour ces deux forme simple.
+A l&amp;rsquo;initialisation (constructeur de Application):
+ Utiliser ces fonctions pour construire la géométrie d&amp;rsquo;une sphere et d&amp;rsquo;un cube.</description>
+    </item>
+    
+    <item>
+      <title>Geometry pass</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/geometry-pass/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/geometry-pass/</guid>
+      <description>Comme indiqué en introduction, la première passe de rendu est la Geometry Pass, dont l&amp;rsquo;objectif est de &amp;ldquo;dessiner&amp;rdquo; dans un GBuffer les informations concernant les objets visible à l&amp;rsquo;écran.
+Pour cela, il va falloir créer les textures OpenGL destinées à contenir ces informations, et les attacher à un framebuffer object, qui va permettre d&amp;rsquo;écrire dans ces textures plutot qu&amp;rsquo;a l&amp;rsquo;écran.
+Pour ces TPs, dupliquez l&amp;rsquo;app de l&amp;rsquo;exercice du foward renderer afin d&amp;rsquo;avoir une scene chargée et stockée sur GPU pour être rendue.</description>
+    </item>
+    
+    <item>
+      <title>Repo Github</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/repo-github/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/repo-github/</guid>
+      <description>Git ? Si vous ne connaissez pas, Git est un système distribué de gestion de version: un logiciel permettant d&amp;rsquo;enregistrer au fur à mesure les modifications du code source d&amp;rsquo;un projet, de manière partagé entre plusieurs utilisateur.
+On peut ainsi facilement revenir en arrière, partager du code, controler qui fait quoi, gérer plusieurs versions, etc.
+L&amp;rsquo;objectif de ces TDs n&amp;rsquo;est pas d&amp;rsquo;apprendre à utiliser Git, mais il sera pratique pour moi de suivre votre progression et de récupérer votre projet grace à un repo Git publique.</description>
+    </item>
+    
+    <item>
+      <title>OpenGL Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:52:53 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/opengl-objects/</guid>
+      <description>Les objets OpenGL représentent des conteneurs d&amp;rsquo;état du contexte OpenGL. Lorsqu&amp;rsquo;un objet est bindé sur l&amp;rsquo;état correspondant, tous les changement sur cet état sont stocké dans l&amp;rsquo;objet bindé.
+A lire: https://www.khronos.org/opengl/wiki/OpenGL_Object
+Il existe différents types d&amp;rsquo;objets OpenGL, ceux que nous utilisons dans ces TPs étant:
+ Buffer Object: représente un tableau de données pouvant être stocké en mémoire GPU. Vertex Array Object: représente la spécification des sommets et leurs rangement aux seins d&amp;rsquo;un ou plusieurs buffer objets.</description>
+    </item>
+    
+    <item>
+      <title>Extraction de contours</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/extraction-contours/</guid>
+      <description>En construction  </description>
+    </item>
+    
+    <item>
+      <title>Fiche d&#39;information</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/fiche-info/</guid>
+      <description>Remplissez cette fiche: https://goo.gl/forms/ffuXJJ1vYCAvUA7s1 ça m&amp;rsquo;aidera.</description>
+    </item>
+    
+    <item>
+      <title>Percentage Closest Filtering</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/percentage-closest-filtering/</guid>
+      <description>Percentage Closest Filtering Basique L&amp;rsquo;aspect visuel du shadow mapping dépend grandement de la résolution choisie. Pour une résolution de 512, vous avez du constater que le rendu des ombres est très aliasé. Il faut monter à 4096 au moins pour ne plus voir l&amp;rsquo;aliasing à une distance correcte, qui reste très visible en se rapprochant.
+Une manière de palier à cet aliasing est d&amp;rsquo;utiliser une méthode de filtrage appelée Percentage Closest Filtering, qui consiste à moyenner la visibilité dans un voisinage du point afin de flouter/bruiter les ombres sur leur bord.</description>
+    </item>
+    
+    <item>
+      <title>Shaders</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/shaders/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/shaders/</guid>
+      <description>Créez un sous-dossier shader dans le dossier de l&amp;rsquo;application foward-renderer et créez le fichiers forward.vs.glsl et forward.fs.glsl.
+Voir les différents shaders des applications déjà présente pour vous aider.
+Ce TD de l&amp;rsquo;année précedente explique également la théorie.
+Le Vertex Shader  Le vertex shader doit prendre en entrée une position (vec3 aPosition), une normale (vec3 aNormal) et des texCoords (vec2 aTexCoords) N&amp;rsquo;oubliez pas de définir les locations des attributs Ajouter des variable uniformes mat4 uModelViewProjMatrix, mat4 uModelViewMatrix, mat4 uNormalMatrix correspondant aux matrices standard en 3D Ajouter des variables out vec3 vViewSpacePosition, vec3 vViewSpaceNormal, vec3 vTexCoords Dans le main du shader, remplir les différentes variables out et la variable gl_Position en respectant le pseudo-code suivant et en faisant les convertions de type necessaires:  vViewSpacePosition = uModelViewMatrix * aPosition vViewSpaceNormal = uNormalMatrix * aNormal vTexCoords = aTexCoords gl_Position = uModelViewProjMatrix * aPosition  Le Fragment Shader En attendant d&amp;rsquo;implémenter un modèle d&amp;rsquo;illumination, faite en sorte que le fragment shader affiche les normales des objets.</description>
+    </item>
+    
+    <item>
+      <title>Shading pass</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/shading-pass/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/shading-pass/</guid>
+      <description>Il faut maintenant coder la shading pass, qui a pour role d&amp;rsquo;illuminer chaque pixel en utilisant les textures du GBuffer qui viennents se substituer aux variables d&amp;rsquo;entrées du fragment shader d&amp;rsquo;un forward renderer.
+Shaders Créez deux nouveaux shaders shadingPass.vs.glsl et shadingPass.fs.glsl.
+Le VS est destiner à traiter un simple quad en 2D couvrant tout l&amp;rsquo;écran, tout ce passera dans le FS. Voici donc le code du VS:
+#version 330layout(location=0)invec2aPosition;voidmain(){gl_Position=vec4(aPosition,0,1);}  Pour le FS c&amp;rsquo;est un peu plus compliqué, mais vous pouvez repartir de celui du forward renderer.</description>
+    </item>
+    
+    <item>
+      <title>Buffer Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:15 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/buffer-objects/</guid>
+      <description>Pages du wiki à lire:
+ Buffer Object Buffer Object Streaming Shader Storage Buffer Object Uniform Buffer Object  </description>
+    </item>
+    
+    <item>
+      <title>Aller plus loin</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/04-shadow-mapping/aller-plus-loin/</guid>
+      <description>Ces exercices vous ont montré comment implementer le shadow mapping pour une lumière directionnelle.
+L&amp;rsquo;implémentation est un peu plus compliquée pour une lumière ponctuelle car il faut pouvoir projeter sur la carte de profondeur l&amp;rsquo;ensemble de la scene vu depuis la point light, c&amp;rsquo;est à dire la considérer comme une camera pouvant voir à 360°.
+Le plus simple et robuste pour cela est de faire 6 rendus de la scene sur les faces d&amp;rsquo;un cube entourant la point light.</description>
+    </item>
+    
+    <item>
+      <title>Depth of field</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/05-post-processing/depth-of-field/</guid>
+      <description>En construction  </description>
+    </item>
+    
+    <item>
+      <title>Software Development Kit</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/sdk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/sdk/</guid>
+      <description>Le repository que vous avez forké et cloné contient un SDK pour coder les TDs. Cette partie explique comment compiler les applications d&amp;rsquo;exemple, vos futures applications, la structure du repertoire et les spécifité du fichier CMake.
+Compilation  Avec CMake Support de GCC 5+ (sans boost), GCC 4.9.2 (boost requis) et Visual Studio 2015 (sans boost) (devrait aussi fonctionner avec Visual 2017, mais je n&amp;rsquo;ai pas encore testé)  CMake est un logiciel permettant de générer une solution de compilation adaptée au système sur lequel on l&#39;execute.</description>
+    </item>
+    
+    <item>
+      <title>Transformations</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/transformations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/transformations/</guid>
+      <description>Sans Caméra Dans le code C++ de l&amp;rsquo;application, à l&amp;rsquo;initialisation:
+ Charger et compiler les shaders (glmlv::compileProgram) Récupérer les locations des variables uniform Appeler .use() sur le programme GLSL compilé  Au rendu:
+ Construire une matrice projection, une matrice view et deux matrices model (une pour le cube et une pour la sphere) Envoyez les combinaisons de ces matrices dans les uniform correspondante avant le rendu de chaque objet  A ce stade, vous devriez avoir un rendu correct de vos objets si vous vous arrangez pour bien construire les matrices (ne pas oublier qu&amp;rsquo;OpenGL &amp;ldquo;voit&amp;rdquo; du coté négatif de l&amp;rsquo;axe Z de l&amp;rsquo;espace view).</description>
+    </item>
+    
+    <item>
+      <title>Vertex Array Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:25 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/vertex-array-objects/</guid>
+      <description>Pages du wiki à lire:
+ Vertex Specification Vertex Array Object Vertex Buffer Object Index buffers  </description>
+    </item>
+    
+    <item>
+      <title>Lighting</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/lighting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/lighting/</guid>
+      <description>Fragment Shader Implémenter un modèle d&amp;rsquo;illumination diffuse dans le fragment shader forward-renderer.fs.glsl
+ Ajouter des variables uniform vec3 uDirectionalLightDir et vec3 uDirectionalLightIntensity destinés à stocker les paramètres d&amp;rsquo;une lumière directionnelle (en espace view) Ajouter des variables uniform vec3 uPointLightPosition et vec3 uPointLightIntensity destinés à stocker les paramètres d&amp;rsquo;une lumière ponctuelle (en espace view) Ajouter une variable uniform vec3 uKd destiné à stocker la couleur diffuse de l&amp;rsquo;objet en cours de rendu Dans le main, utiliser ces variables ainsi que les attributs du fragment pour calculer la couleur du fragment:  floatdistToPointLight=length(uPointLightPosition-vViewSpacePosition);vec3dirToPointLight=(uPointLightPosition-vViewSpacePosition)/distToPointLight;fColor=uKd*(uDirectionalLightIntensity*max(0.</description>
+    </item>
+    
+    <item>
+      <title>Projet</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/projet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/projet/</guid>
+      <description>L&amp;rsquo;objectif du projet est de développer une demo, au sens &amp;ldquo;Demoscene&amp;rdquo;, c&amp;rsquo;est à dire une application jouant une animation 3D. Quelques exemples de demo.
+Le thème imposé est le suivant: Star Wars (grosse originalité). Si vous n&amp;rsquo;aimez pas Star Wars, vous n&amp;rsquo;aurez qu&amp;rsquo;à exprimer cette haine dans votre démo, ou le mixer avec un autre thème de votre choix.
+En general les elements d&amp;rsquo;une demo sont procéduraux (générés aléatoirement), mais ce n&amp;rsquo;est pas obligatoire pour le projet (vous pouvez charger des modèles 3D et textures, vous devriez pouvoir trouver facilement des vaisseaux sur le net).</description>
+    </item>
+    
+    <item>
+      <title>Texture et Sampler Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:40 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/textures/</guid>
+      <description>Pages du wiki à lire:
+ Texture Image Format Sampler Object Cubemap Texture Buffer Texture Array Texture  </description>
+    </item>
+    
+    <item>
+      <title>Liens OpenGL</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/liens/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/01-introduction/liens/</guid>
+      <description>Le plus important, à toujours avoir sous le coude:
+ Le Wiki OpenGL Une version digeste de la documentation OpenGL/GLSL La reference card OpenGL 4.4  Et quelques liens utiles pour OpenGL:
+ Mes TDs OpenGL 3+ écris pour les Imacs 2 Des tutoriaux OpenGL 3+ Plein d&amp;rsquo;autres tutos OpenGL 3+ en francais Une énorme liste d&amp;rsquo;exemples de code OpenGL  </description>
+    </item>
+    
+    <item>
+      <title>Textures</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/textures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/textures/</guid>
+      <description>Fragment Shader  Ajouter une variable uniform sampler2D uKdSampler, destiné à pointer sur une texture des couleurs diffuses pour l&amp;rsquo;objet en cours de rendu. Dans le main, utiliser la fonction GLSL texture afin de lire le sampler en utiliser les tex coords du fragment. Multiplier la valeur lue avec la variable uKd pour obtenir le coefficient diffus final de l&amp;rsquo;objet, à utiliser pour l&amp;rsquo;illumination  Application A l&amp;rsquo;initialisation
+ Charger deux images de votre choix à utiliser en temps que texture diffuse de chacun de nos objets (utiliser la classe glmlv::Image2DRGBA et la fonction glmlv::readImage) Construire deux texture objects OpenGL et envoyer les pixel des deux images chargés dans ces texture objects Construire un sampler object OpenGL et fixer les paramètres GL_TEXTURE_MIN_FILTER et GL_TEXTURE_MAG_FILTER à GL_LINEAR pour ce sampler Récuperer la location de l&amp;rsquo;uniform sampler2D uKdSampler  Au rendu</description>
+    </item>
+    
+    <item>
+      <title>Framebuffer Objects</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/</link>
+      <pubDate>Thu, 19 Jan 2017 23:55:49 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/framebuffer-objects/</guid>
+      <description>Pages du wiki à lire:
+ Framebuffer Object Default Framebuffer  </description>
+    </item>
+    
+    <item>
+      <title>Chargement de modèles OBJ</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/load-obj/</link>
+      <pubDate>Thu, 29 Dec 2016 12:22:16 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/load-obj/</guid>
+      <description>Vous pouvez obtenir différents modèles OBJ sur cette page (je vous conseille de commencer par essayer avec Crytek-Sponza).
+ API Utiliser la fonction suivante de la lib pour charger un modèle OBJ:
+voidglmlv::loadObj(constglmlv::fs::path&amp;amp;objPath,glmlv::ObjData&amp;amp;data);  Celle ci charge le fichier dont le chemin est passé en paramètre (pensez à mettre le modèle dans le repertoire assets). Elle remplit une structure de type glmlv::ObjData contenant les informations suivantes:
+structObjData{size_tshapeCount;// Nombre d&amp;#39;objets dans l&amp;#39;OBJ size_tmaterialCount;// Nombre de matériaux // Point min et max de la bounding box de l&amp;#39;OBJ: glm::vec3bboxMin;glm::vec3bboxMax;std::vector&amp;lt;Vertex3f3f2f&amp;gt;vertexBuffer;// Tableau de sommets std::vector&amp;lt;uint32_t&amp;gt;indexBuffer;// Tableau d&amp;#39;indices std::vector&amp;lt;uint32_t&amp;gt;indexCountPerShape;// Nombre d&amp;#39;indices par objet std::vector&amp;lt;int32_t&amp;gt;materialIDPerShape;// Index de materiaux de chaque objet (pointe dans le tableau materials) std::vector&amp;lt;PhongMaterial&amp;gt;materials;// Tableau des materiaux std::vector&amp;lt;Image2DRGBA&amp;gt;textures;// Tableau dex textures référencées par les materiaux }  Les tableaux vertexBuffer et indexBuffer doivent être utilisés pour remplir un VBO et un IBO à binder sur un VAO pour le rendu.</description>
+    </item>
+    
+    <item>
+      <title>Shaders</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/</link>
+      <pubDate>Thu, 19 Jan 2017 23:57:43 +0100</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/06-course/shaders/</guid>
+      <description>Les shaders sont de cours programmes compilés pour fonctionner sur carte graphique, dans les stages dit programmables du pipeline.
+Plusieurs languages de shading existent mais nous utilisons GLSL dans ces TPs car OpenGL fournie une API et compilation et link pour ce language.
+A lire: https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language
+Différents types de shaders existent, ceux que nous utilisons dans ces TPs sont:
+ Vertex Shaders: Se charge du calcul par sommet. Généralement il projete le sommet en entrée sur l&amp;rsquo;écran afin que les triangles soit prêt pour la rasterisation.</description>
+    </item>
+    
+    <item>
+      <title>Aller plus loin</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/plus-loin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/02-forward-renderer/plus-loin/</guid>
+      <description>Voici plusieurs choses améliorable pour rendre notre forward renderer plus interessant:
+Normal Mapping Ajouter une texture de normales dans le fragment shader et faire le necessaire pour charger la texture de normales de chaque objet.
+L&amp;rsquo;utiliser à la place de uViewSpaceNormal pour calculer l&amp;rsquo;illumination.
+Vous pouvez vous réferer à ce tutorial.
+Plusieurs Lights Actuellement le shader ne gère que deux lumières, c&amp;rsquo;est un peu triste.
+Utilisez les Shader Storage Buffer Objects pour accéder à des tableau de directions, positions et intensités depuis le fragment shader, correspondant à un nombre arbitraire de directional et point lights (stockez leur nombre dans des uniforms).</description>
+    </item>
+    
+    <item>
+      <title>Aller plus loin</title>
+      <link>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/plus-loin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Celeborn2BeAlive.github.io/opengl-avance/03-deferred-renderer/plus-loin/</guid>
+      <description>Voici plusieurs choses améliorable pour rendre notre deferred renderer plus interessant:
+Compute Shader pour la Shading Pass Dessiner un quad pour la shading pass, c&amp;rsquo;est en réalité se compliquer la vie pour rien. Tout ce qu&amp;rsquo;on veut c&amp;rsquo;est traiter chacun des pixels du GBuffer, en parallèle sur GPU. D&amp;rsquo;une certaine manière, ce qu&amp;rsquo;on aimerait faire c&amp;rsquo;est un genre de kernel Cuda.
+Ca tombe bien, les compute shaders (dispo depuis OpenGL 4.</description>
+    </item>
+    
+  </channel>
+</rss>
